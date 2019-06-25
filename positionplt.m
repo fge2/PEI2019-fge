@@ -27,7 +27,8 @@ n=length(t);
 f = figure;
 worldmap(latlim, lonlim);
 geoshow(lat,lon,'DisplayType','Point','Marker','o','MarkerFaceColor','red','Markersize',5);
-title(strcat('Path of',{' '},name));
+handle=title(strcat('Path of',{' '},name));
+handle.Position=[0.1746 -1.127e+06 -2.1102e-16];
 xlabel('Latitude');
 ylabel('Longitude');
 
@@ -43,7 +44,8 @@ i=dive(2:end)-1;
 j=surface-1;
 d = quiverm(lat(i),lon(i),dellat(i),dellon(i));
 s = quiverm(lat(j),lon(j),dellat(j),dellon(j),'m');
-legend([d(1);s(1)],'Underwater Displacement Vectors','Surface Level Displacement Vectors')
+legend([d(1);s(1)],'Underwater Displacement Vectors',...
+    'Surface Level Displacement Vectors','Location','southeast')
 hold off
 
 % Optional output

@@ -1,37 +1,45 @@
-function varargout=mpredict(name,t,lat,lon,points,order,f,input)
-% [nextlat,nextlon]=mpredict(name,t,lat,lon,points,order,f,input)
+function varargout=mpredict(t,lat,lon,f,points,order,next,plotornot)
+% [nextlat,nextlon]=mpredict(t,lat,lon,f,points,order,next,plotornot)
 %
 % Predicts future mermaid location
+% If plotornot=1 it is necessary to assign the output of positionplt to 'f'
 %
 % INPUT:
-% name        The name of the mermaid
+%
 % t           The datetime vector
 % lat         The latitude vector
 % lon         The longitude vector
-% f           The figure handle the position plot
-% input       0 returns last point
-%             1 uses polyfit to predict next point (default)
+% f           The figure handle of positionplt
+% points      The number of previous points to perform regression on
+% order       The order of regression
+% next        The time in seconds after the final point which is to be 
+%             predicted
+% plotornot   1 makes plots (default)
+%             0 does not%
 %
 % OUTPUT:
 %
 % nextlat     The latitude prediction a week later
 % nextlon     The longitude prediction a week later
 %
-% Last modified by fge@princeton.edu on 6/24/19
+% Last modified by fge@princeton.edu on 6/25/19
 
-defval('input',1);
+defval('points',4);
 defval('order',2);
-figure(f)
+defval('next',604800);
+defval('plotornot',1);
 
+input=1;
 switch input
     case 0
         nextlat=lat(end);
         nextlon=lon(end);
+        figure(f)
         geoshow(nextlat,nextlon,'DisplayType','Point','Marker','o',...
-        'MarkerFaceColor','b','Markersize',5)
+        'MarkerFaceColor','b','MarkerEdgeColor','b''Markersize',5)
         
     case 1
-        [mag,theta]=vplt(name,t,lat,lon,0);
+        [mag,theta]=vplt([],t,lat,lon,0);
         [dive,~]=indexsplit(t);
         
         % setting x and y for regression
@@ -46,28 +54,30 @@ switch input
         end
         
         % predicting new latitude and longitude
-        week_in_seconds = 604800;
-        mcurve = polyfit(timeframe,mset,order);
-        tcurve = polyfit(timeframe,tset,order);
-        mpredict = polyval(mcurve,dive_time(end)+week_in_seconds);
-        tpredict = polyval(tcurve,dive_time(end)+week_in_seconds);
+        [mcurve,S1,mu1] = polyfit(timeframe,mset,order);
+        [tcurve,S2,mu2] = polyfit(timeframe,tset,order);
+        mpredict = polyval(mcurve,dive_time(end)+next,S1,mu1);
+        tpredict = polyval(tcurve,dive_time(end)+next,S2,mu2);
         latpredict = mpredict * sin(tpredict);
         lonpredict = mpredict * cos(tpredict);
-        latdist = latpredict * week_in_seconds;
-        londist = lonpredict * week_in_seconds;
+        latdist = latpredict * next;
+        londist = lonpredict * next;
         changelat = distdim(latdist,'m','deg','earth');
         changelon = distdim(londist,'m','deg','earth');
         nextlat = changelat + lat(end);
         nextlon = changelon + lon(end);
         
         % plotting prediction
-        figure(f);
-        hold on
-        geoshow(nextlat,nextlon,'DisplayType','Point','Marker','o',...
-        'MarkerFaceColor','b','Markersize',7,'DisplayName','Prediction');
-        trajectory = quiverm(lat(end),lon(end),changelat,changelon,'c');
-        trajectory(1).HandleVisibility = 'off';
-        trajectory(2).HandleVisibility = 'off';  
+        if plotornot
+            figure(f)
+            hold on
+            geoshow(nextlat,nextlon,'DisplayType','Point','Marker','o',...
+            'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',5,...
+            'DisplayName','Prediction')
+            trajectory = quiverm(lat(end),lon(end),changelat,changelon,'c');
+            trajectory(1).HandleVisibility = 'off';
+            trajectory(2).HandleVisibility = 'off'; 
+        end
 end
 
 % Optional output
