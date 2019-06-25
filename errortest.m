@@ -30,7 +30,7 @@ error=zeros(1,n-1);
 for i=points:n-1
     [nextlat,nextlon]=mpredict2(t,lat,lon,i,points,order);
     error(i)=distance(nextlat,nextlon,lat(dive(i+1)),lon(dive(i+1)));
-    %error(i)=distdim(arclen,'deg','m','earth');
+    % error(i)=distdim(arclen,'deg','m','earth');
 end
 
 error=error(points+1:end);

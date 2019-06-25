@@ -1,8 +1,8 @@
 function varargout=mpredict(t,lat,lon,f,points,order,next,plotornot)
 % [nextlat,nextlon]=mpredict(t,lat,lon,f,points,order,next,plotornot)
+% [nextlat,nextlon]=mpredict(t,lat,lon,f,points,order)
 %
-% Predicts future mermaid location
-% If plotornot=1 it is necessary to assign the output of positionplt to 'f'
+% Predicts and plots future mermaid location
 %
 % INPUT:
 %

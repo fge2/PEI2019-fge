@@ -1,5 +1,5 @@
 function varargout=mpredict2(t,lat,lon,finish,points,order)
-% [nextlat,nextlon]=mpredict(t,lat,lon,finish,points,order)
+% [nextlat,nextlon]=mpredict2(t,lat,lon,finish,points,order)
 %
 % Predicts mermaid location after a given finish index
 %
@@ -8,12 +8,11 @@ function varargout=mpredict2(t,lat,lon,finish,points,order)
 % t           The datetime vector
 % lat         The latitude vector
 % lon         The longitude vector
+% finish      The SUBSURFACE index which you want to predict afterwards
+%             Upper limit is the 'length of the dive vector - 1' given from
+%             indexsplit()
 % points      The number of previous points to perform regression on
 % order       The order of regression
-% next        The time in seconds after the final point which is to be 
-%             predicted
-% plotornot   1 makes plots (default)
-%             0 does not%
 %
 % OUTPUT:
 %
@@ -22,6 +21,8 @@ function varargout=mpredict2(t,lat,lon,finish,points,order)
 %
 % Last modified by fge@princeton.edu on 6/25/19
 
+defval('points',4);
+defval('order',2);
 [mag,theta]=vplt([],t,lat,lon,0);
 [dive,~]=indexsplit(t);
 
@@ -37,19 +38,19 @@ for i=2:points
 end
 
 % predicting new latitude and longitude
-[mcurve,S1,mu1] = polyfit(timeframe,mset,order);
-[tcurve,S2,mu2] = polyfit(timeframe,tset,order);
+[mcurve,S1,mu1]=polyfit(timeframe,mset,order);
+[tcurve,S2,mu2]=polyfit(timeframe,tset,order);
 next=dive_time(finish+1);
-mpredict = polyval(mcurve,dive_time(end)+next,S1,mu1);
-tpredict = polyval(tcurve,dive_time(end)+next,S2,mu2);
-latpredict = mpredict * sin(tpredict);
-lonpredict = mpredict * cos(tpredict);
-latdist = latpredict * next;
-londist = lonpredict * next;
-changelat = distdim(latdist,'m','deg','earth');
-changelon = distdim(londist,'m','deg','earth');
-nextlat = changelat + lat(dive(finish));
-nextlon = changelon + lon(dive(finish));
+mpredict=polyval(mcurve,dive_time(end)+next,S1,mu1);
+tpredict=polyval(tcurve,dive_time(end)+next,S2,mu2);
+latpredict=mpredict * sin(tpredict);
+lonpredict=mpredict * cos(tpredict);
+latdist=latpredict * next;
+londist=lonpredict * next;
+changelat=distdim(latdist,'m','deg','earth');
+changelon=distdim(londist,'m','deg','earth');
+nextlat=changelat + lat(dive(finish));
+nextlon=changelon + lon(dive(finish));
 
 % Optional output
 varns={nextlat,nextlon};
