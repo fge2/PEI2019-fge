@@ -4,6 +4,8 @@ function varargout=mpredict(t,lat,lon,f,points,order,next,plotornot)
 %
 % Predicts and plots future mermaid location
 %
+% Predicts future mermaid location
+%
 % INPUT:
 %
 % t           The datetime vector
