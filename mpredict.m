@@ -1,7 +1,8 @@
 function varargout=mpredict(float_name,f,points,order,next)
-% [nextlat,nextlon]=mpredict(float_name,f,points,order,next)
+  % [nextlat,nextlon,mpredict,tpredict]=mpredict(float_name,f,points,order,next)
 %
-% Predicts and plots future mermaid location
+% Predicts and plots future mermaid location and returns future position 
+% and velocity
 %
 % INPUT:
 %
@@ -16,6 +17,8 @@ function varargout=mpredict(float_name,f,points,order,next)
 %
 % nextlat     The latitude prediction a week later
 % nextlon     The longitude prediction a week later
+% mpredict    The predicted magnitude of velocity
+% tpredict    The predicted angle of velocity
 %
 % Last modified by fge@princeton.edu on 6/26/19
 
@@ -75,5 +78,5 @@ switch input
 end
 
 % Optional output
-varns={nextlat,nextlon};
+varns={nextlat,nextlon,mpredict,tpredict};
 varargout=varns(1:nargout);

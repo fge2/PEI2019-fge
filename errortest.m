@@ -1,5 +1,5 @@
 function varargout=errortest(float_name,points,order)
-% [error,mu,sd,sse,sst,rr]=errortest(float_name,points,order)
+% [res,mu,sd,rr,errormag]=errortest(float_name,points,order)
 %
 % Plots histogram of errors resulting from mpredict2
 %
@@ -11,10 +11,11 @@ function varargout=errortest(float_name,points,order)
 %
 % OUTPUT:
 %
-% error       The vector of errors of the prediction
+% res         The vector of residues for the prediction
 % mu          The mean of the error
 % sd          The standard deviation of the error
-% sse         The error sum of squares
+% rr          The r squared values
+% errormag    The magnitude of errors for predictions
 %
 % Last modified by fge@princeton.edu on 6/26/19
 
@@ -27,33 +28,39 @@ defval('order',2);
 n=length(dive);
 latguess=zeros(1,n-1);
 longuess=zeros(1,n-1);
-error=zeros(1,n-1);
+res=zeros(1,n-1);
+late=zeros(1,n-1);
+lone=zeros(1,n-1);
 
-% calculate error
+% calculate residue/error
 for i=points:n-1
-    [nextlat,nextlon,~,~]=mpredict2(float_name,i,points,order);
-    error(i)=distance(nextlat,nextlon,lat(dive(i+1)),lon(dive(i+1)));
+    [nextlat,nextlon,laterror,lonerror]=mpredict2(float_name,i,points,order);
+    res(i)=distance(nextlat,nextlon,lat(dive(i+1)),lon(dive(i+1)));
     if lat(dive(i+1))<nextlat
-        error(i)=-error(i);
+        res(i)=-res(i);
     end
     latguess(i)=nextlat;
     longuess(i)=nextlon;
+    late(i)=laterror;
+    lone(i)=lonerror;
 end
 
-error=error(points+1:end);
+res=res(points+1:end);
 figure
-hist(error,20);
-title(strcat('Histogram of Error for',{' '},num2str(points),...
+subplot(2,1,1)
+hist(res,20);
+title(strcat('Histogram of Residues for',{' '},num2str(points),...
 ' Points @ Order',{' '},num2str(order)));
-xlabel('Magnitude of Error');
+xlabel('Magnitude (Degrees)');
 ylabel('Frequency');
+subplot(2,1,2)
+histogram(abs(res),20,'Normalization','cdf')
 
 % statistics
-mu=mean(error);
-sd=std(error);
-sse=sum(error.^2);
+mu=mean(res);
+sd=std(res);
 
-% sst and r^2 calculation
+% r^2 calculation
 latguess=latguess(points+1:end);
 longuess=longuess(points+1:end);
 latm=mean(lat(dive(points:end)));
@@ -61,8 +68,20 @@ lonm=mean(lon(dive(points:end)));
 latsst=sum((latguess-latm).^2);
 lonsst=sum((longuess-lonm).^2);
 sst=(latsst+lonsst)/2;
+sse=sum(res.^2);
 rr=1-(sse/sst);
 
+% error
+late=abs(late(points+1:end));
+lone=abs(lone(points+1:end));
+errormag=sqrt(late.*lone);
+figure
+hist(errormag,20);
+title(strcat('Histogram of Prediction Errors for',{' '},num2str(points),...
+' Points @ Order',{' '},num2str(order)));
+xlabel('Magnitude (Degrees)');
+ylabel('Frequency');
+
 % Optional output
-varns={error,mu,sd,sse,sst,rr};
+varns={res,mu,sd,rr,errormag};
 varargout=varns(1:nargout);

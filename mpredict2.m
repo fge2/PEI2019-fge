@@ -1,5 +1,5 @@
 function varargout=mpredict2(float_name,finish,points,order)
-% [nextlat,nextlon,mdelta,tdelta]=mpredict2(float_name,finish,points,order)
+% [nextlat,nextlon,laterror,lonerror]=mpredict2(float_name,finish,points,order)
 %
 % Predicts mermaid location after a given finish index
 %
@@ -16,7 +16,9 @@ function varargout=mpredict2(float_name,finish,points,order)
 %
 % nextlat     The latitude prediction 
 % nextlon     The longitude prediction
-%
+% laterror    The error of prediction for latitude
+% lonerror    The error of prediction for longitude
+% 
 % Last modified by fge@princeton.edu on 6/26/19
 
 defval('float_name','P017');
@@ -52,8 +54,12 @@ changelon=distdim(londist,'m','deg','earth');
 nextlat=changelat + lat(dive(finish));
 nextlon=changelon + lon(dive(finish));
 
+% delta error
+laterror=mdelta*sin(tdelta);
+lonerror=mdelta*cos(tdelta);
+
 % Optional output
-varns={nextlat,nextlon,mdelta,tdelta};
+varns={nextlat,nextlon,laterror,lonerror};
 varargout=varns(1:nargout);
 
 
