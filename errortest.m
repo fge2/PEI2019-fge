@@ -31,7 +31,7 @@ error=zeros(1,n-1);
 
 % calculate error
 for i=points:n-1
-    [nextlat,nextlon]=mpredict2(float_name,i,points,order);
+    [nextlat,nextlon,~,~]=mpredict2(float_name,i,points,order);
     error(i)=distance(nextlat,nextlon,lat(dive(i+1)),lon(dive(i+1)));
     if lat(dive(i+1))<nextlat
         error(i)=-error(i);

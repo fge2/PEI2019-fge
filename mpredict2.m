@@ -1,5 +1,5 @@
 function varargout=mpredict2(float_name,finish,points,order)
-% [nextlat,nextlon]=mpredict2(float_name,finish,points,order)
+% [nextlat,nextlon,mdelta,tdelta]=mpredict2(float_name,finish,points,order)
 %
 % Predicts mermaid location after a given finish index
 %
@@ -41,8 +41,8 @@ end
 [mcurve,S1,mu1]=polyfit(timeframe,mset,order);
 [tcurve,S2,mu2]=polyfit(timeframe,tset,order);
 next=dive_time(finish+1);
-mpredict=polyval(mcurve,dive_time(end)+next,S1,mu1);
-tpredict=polyval(tcurve,dive_time(end)+next,S2,mu2);
+[mpredict,mdelta]=polyval(mcurve,dive_time(end)+next,S1,mu1);
+[tpredict,tdelta]=polyval(tcurve,dive_time(end)+next,S2,mu2);
 latpredict=mpredict * sin(tpredict);
 lonpredict=mpredict * cos(tpredict);
 latdist=latpredict * next;
@@ -53,7 +53,7 @@ nextlat=changelat + lat(dive(finish));
 nextlon=changelon + lon(dive(finish));
 
 % Optional output
-varns={nextlat,nextlon};
+varns={nextlat,nextlon,mdelta,tdelta};
 varargout=varns(1:nargout);
 
 
