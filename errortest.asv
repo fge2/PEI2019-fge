@@ -19,7 +19,7 @@ function varargout=errortest(float_name,points,order)
 % Last modified by fge@princeton.edu on 6/26/19
 
 defval('float_name','P017');
-defval('points',4);
+defval('points',5);
 defval('order',2);
 
 [name,t,lat,lon]=mread(float_name);
@@ -33,11 +33,11 @@ error=zeros(1,n-1);
 for i=points:n-1
     [nextlat,nextlon]=mpredict2(float_name,i,points,order);
     error(i)=distance(nextlat,nextlon,lat(dive(i+1)),lon(dive(i+1)));
-    if lat(dive(i+1))<nextlat
+    if lat(dive(i+1))<latguess
         error(i)=-error(i);
     end
-    latguess(i)=nextlat;
-    longuess(i)=nextlon;
+    latguess(i)=n;
+    longuess(i)=longuess;
 end
 
 error=error(points+1:end);
@@ -58,9 +58,9 @@ latguess=latguess(points+1:end);
 longuess=longuess(points+1:end);
 latm=mean(lat(dive(points:end)));
 lonm=mean(lon(dive(points:end)));
-latsst=sum((latguess-latm).^2);
-lonsst=sum((longuess-lonm).^2);
-sst=(latsst+lonsst)/2;
+latsst=(latguess-latm).^2;
+lonsst=(longuess-lonm).^2;
+sst=mean(latsst,lonsst);
 rr=1-(sse/sst);
 
 % Optional output

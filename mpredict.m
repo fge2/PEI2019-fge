@@ -64,14 +64,14 @@ switch input
         nextlon = changelon + lon(end);
         
         % plotting prediction
-            figure(f)
-            hold on
-            geoshow(nextlat,nextlon,'DisplayType','Point','Marker','o',...
-            'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',5,...
-            'DisplayName','Prediction')
-            trajectory = quiverm(lat(end),lon(end),changelat,changelon,'c');
-            trajectory(1).HandleVisibility = 'off';
-            trajectory(2).HandleVisibility = 'off'; 
+        figure(f)
+        hold on
+        geoshow(nextlat,nextlon,'DisplayType','Point','Marker','o',...
+        'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',5,...
+        'DisplayName','Prediction')
+        trajectory = quiverm(lat(end),lon(end),changelat,changelon,'c');
+        trajectory(1).HandleVisibility = 'off';
+        trajectory(2).HandleVisibility = 'off'; 
 end
 
 % Optional output
