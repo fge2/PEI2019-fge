@@ -1,16 +1,13 @@
-function varargout=mpredict2(t,lat,lon,finish,points,order)
-% [nextlat,nextlon]=mpredict2(t,lat,lon,finish,points,order)
-% [nextlat,nextlon]=mpredict(t,lat,lon,finish,points,order)
+function varargout=mpredict2(float_name,finish,points,order)
+% [nextlat,nextlon]=mpredict2(float_name,finish,points,order)
 %
 % Predicts mermaid location after a given finish index
 %
 % INPUT:
 %
-% t           The datetime vector
-% lat         The latitude vector
-% lon         The longitude vector
-% finish      The SUBSURFACE index which you want to predict afterwards
-%             Upper limit is the 'length of the dive vector - 1' given from
+% float_name  The name of the mermaid float
+% finish      The index which you want to predict afterwards
+%             Upper limit is the 'length of the dive vector-1' given from
 %             indexsplit()
 % points      The number of previous points to perform regression on
 % order       The order of regression
@@ -20,11 +17,13 @@ function varargout=mpredict2(t,lat,lon,finish,points,order)
 % nextlat     The latitude prediction 
 % nextlon     The longitude prediction
 %
-% Last modified by fge@princeton.edu on 6/25/19
+% Last modified by fge@princeton.edu on 6/26/19
 
+defval('float_name','P017');
 defval('points',4);
 defval('order',2);
-[mag,theta]=vplt([],t,lat,lon,0);
+[name,t,lat,lon]=mread(float_name);
+[mag,theta]=vplt(float_name,0);
 [dive,~]=indexsplit(t);
 
 % setting x and y for regression

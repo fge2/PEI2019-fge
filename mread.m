@@ -1,25 +1,26 @@
-function varargout=mread(url)
-% [name,t,lat,lon]=mread(url)
+function varargout=mread(float_name)
+% [name,t,lat,lon]=mread(float_name)
 % 
-% Reads in mermaid float data from given url
+% Reads in mermaid float data using webread given float name
 %
 % INPUT:
 %
-% url     Website containing mermaid information
-%         Ex:http://geoweb.princeton.edu/people/simons/SOM/P017_030.txt
+% float_name     Name/number of mermaid float
+
 %
 % OUTPUT:
 %
-% name    The name of the float
-% lat     The latitude vector
-% lon     The longitude vector
-% t       The datetime vector
+% name           The name of the float
+% lat            The latitude vector
+% lon            The longitude vector
+% t              The datetime vector
 %
-% Last modified by fge@princeton.edu on 6/24/19
+% Last modified by fge@princeton.edu on 6/26/19
 
-defval('url','http://geoweb.princeton.edu/people/simons/SOM/P017_030.txt');
+defval('float_name','P017');
 
 % read and parse data
+url=strcat('http://geoweb.princeton.edu/people/simons/SOM/',float_name,'_030.txt');
 data=webread(url);
 data_split=strsplit(data);
 date=data_split(2:15:end);

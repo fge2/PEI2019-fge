@@ -1,14 +1,11 @@
-function varargout = vplt(name,t,lat,lon,plotornot)
-% [mag,theta]=vplt(t,lat,lon)
+function varargout = vplt(float_name,plotornot)
+% [mag,theta]=vplt(float_name,plotornot)
 % 
 % Plots properties of surface and subsurface velocity
 %
 % INPUT:
-%  
-% name        The name of the mermaid
-% t           The datetime vector
-% lat         The latitude vector
-% lon         The longitude vector
+% 
+% float_name  Name/number of mermaid float 
 % plotornot   1 makes plots (default)
 %             0 does not
 %
@@ -16,11 +13,12 @@ function varargout = vplt(name,t,lat,lon,plotornot)
 %
 % mag         The magnitude vector of mermaid velocity
 % theta       The angle vector of mermaid velocity in radians
-% f           The figure handle
 %
-% Last modified by fge@princeton.edu on 6/24/19
+% Last modified by fge@princeton.edu on 6/26/19
 
+defval('float_name','P017');
 defval('plotornot',0);
+[name,t,lat,lon]=mread(float_name);
 n=length(t);
 
 % magnitude calculation

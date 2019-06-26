@@ -1,15 +1,11 @@
-function varargout=positionplt(name,t,lat,lon,latlim,lonlim)
-% f=positionplt(name,t,lat,lon)
-% f=positionplt(name,t,lat,lon,latlim,lonlim)
+function varargout=positionplt(float_name,latlim,lonlim)
+% f=positionplt(latlim,lonlim)
 % 
 % Plots mermaid data on latlon scale
 %
 % INPUT:
 %  
-% name        The name of mermaid float
-% t           The datetime vector
-% lat         The latitude vector
-% lon         The longitude vector
+% float_name  The name of the mermaid float
 % latlim      The latitude limits given in a 1x2 vector
 % lonlim      The longitude limits given in 1x2 vector
 %
@@ -17,10 +13,12 @@ function varargout=positionplt(name,t,lat,lon,latlim,lonlim)
 %
 % f           The figure handle
 %
-% Last modified by fge@princeton.edu on 6/24/19
+% Last modified by fge@princeton.edu on 6/26/19
 
+defval('float_name','P017');
 defval('latlim',[-12 -10.5]);
 defval('lonlim',[-138 -135.5]);
+[name,t,lat,lon]=mread(float_name);
 n=length(t);
 
 % Plot coordinates

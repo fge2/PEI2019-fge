@@ -1,35 +1,29 @@
-function varargout=mpredict(t,lat,lon,f,points,order,next,plotornot)
-% [nextlat,nextlon]=mpredict(t,lat,lon,f,points,order,next,plotornot)
-% [nextlat,nextlon]=mpredict(t,lat,lon,f,points,order)
+function varargout=mpredict(float_name,f,points,order,next)
+% [nextlat,nextlon]=mpredict(float_name,f,points,order,next)
 %
 % Predicts and plots future mermaid location
 %
-% Predicts future mermaid location
-%
 % INPUT:
 %
-% t           The datetime vector
-% lat         The latitude vector
-% lon         The longitude vector
+% float_name  The name of the mermaid float
 % f           The figure handle of positionplt
 % points      The number of previous points to perform regression on
 % order       The order of regression
 % next        The time in seconds after the final point which is to be 
 %             predicted
-% plotornot   1 makes plots (default)
-%             0 does not%
 %
 % OUTPUT:
 %
 % nextlat     The latitude prediction a week later
 % nextlon     The longitude prediction a week later
 %
-% Last modified by fge@princeton.edu on 6/25/19
+% Last modified by fge@princeton.edu on 6/26/19
 
-defval('points',4);
+defval('float_name','P017')
+defval('points',6);
 defval('order',2);
 defval('next',604800);
-defval('plotornot',1);
+[name,t,lat,lon]=mread(float_name);
 
 input=1;
 switch input
@@ -41,7 +35,7 @@ switch input
         'MarkerFaceColor','b','MarkerEdgeColor','b''Markersize',5)
         
     case 1
-        [mag,theta]=vplt([],t,lat,lon,0);
+        [mag,theta]=vplt(float_name,0);
         [dive,~]=indexsplit(t);
         
         % setting x and y for regression
@@ -70,7 +64,6 @@ switch input
         nextlon = changelon + lon(end);
         
         % plotting prediction
-        if plotornot
             figure(f)
             hold on
             geoshow(nextlat,nextlon,'DisplayType','Point','Marker','o',...
@@ -79,7 +72,6 @@ switch input
             trajectory = quiverm(lat(end),lon(end),changelat,changelon,'c');
             trajectory(1).HandleVisibility = 'off';
             trajectory(2).HandleVisibility = 'off'; 
-        end
 end
 
 % Optional output
