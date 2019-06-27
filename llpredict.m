@@ -32,8 +32,6 @@ latdist=latpredict * next;
 londist=lonpredict * next;
 changelat=distdim(latdist,'m','deg','earth');
 changelon=distdim(londist,'m','deg','earth');
-%nextlat=changelat + lat(dive(finish));
-%nextlon=changelon + lon(dive(finish));
 
 % Optional output
 varns={changelat,changelon,nextm,nextt};
