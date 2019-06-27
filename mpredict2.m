@@ -1,7 +1,8 @@
-function varargout=mpredict2(float_name,finish,points,order)
-% [nextlat,nextlon,laterror,lonerror]=mpredict2(float_name,finish,points,order)
+function varargout=mpredict2(float_name,finish,points,order,surfaces)
+% [nextlat,nextlon]=mpredict2(float_name,finish,points,order,surfaces)
 %
 % Predicts mermaid location after a given finish index
+% Used for backchecking predictions
 %
 % INPUT:
 %
@@ -11,19 +12,20 @@ function varargout=mpredict2(float_name,finish,points,order)
 %             indexsplit()
 % points      The number of previous points to perform regression on
 % order       The order of regression
+% surfaces    The prediction that number of surfaces later
+%             ex. surfaces=2 predicts 2 surfaces later
 %
 % OUTPUT:
 %
 % nextlat     The latitude prediction 
 % nextlon     The longitude prediction
-% laterror    The error of prediction for latitude
-% lonerror    The error of prediction for longitude
 % 
-% Last modified by fge@princeton.edu on 6/26/19
+% Last modified by fge@princeton.edu on 6/27/19
 
 defval('float_name','P017');
 defval('points',4);
-defval('order',2);
+defval('order',3);
+defval('surfaces',1);
 [name,t,lat,lon]=mread(float_name);
 [mag,theta]=vplt(float_name,0);
 [dive,~]=indexsplit(t);
@@ -40,26 +42,14 @@ for i=2:points
 end
 
 % predicting new latitude and longitude
-[mcurve,S1,mu1]=polyfit(timeframe,mset,order);
-[tcurve,S2,mu2]=polyfit(timeframe,tset,order);
-next=dive_time(finish+1);
-[mpredict,mdelta]=polyval(mcurve,dive_time(end)+next,S1,mu1);
-[tpredict,tdelta]=polyval(tcurve,dive_time(end)+next,S2,mu2);
-latpredict=mpredict * sin(tpredict);
-lonpredict=mpredict * cos(tpredict);
-latdist=latpredict * next;
-londist=lonpredict * next;
-changelat=distdim(latdist,'m','deg','earth');
-changelon=distdim(londist,'m','deg','earth');
+next=dive_time(finish+surfaces);
+[changelat,changelon,nextm,nextt]=llpredict(mset,tset,timeframe,...
+    next,order);
 nextlat=changelat + lat(dive(finish));
 nextlon=changelon + lon(dive(finish));
 
-% delta error
-laterror=mdelta*sin(tdelta);
-lonerror=mdelta*cos(tdelta);
-
 % Optional output
-varns={nextlat,nextlon,laterror,lonerror};
+varns={nextlat,nextlon};
 varargout=varns(1:nargout);
 
 

@@ -1,5 +1,6 @@
 function varargout=mpredict(float_name,f,points,order,next)
-  % [nextlat,nextlon,mpredict,tpredict]=mpredict(float_name,f,points,order,next)
+% [nextlat,nextlon,nextm,nextt]=mpredict(float_name,f,points,order,next)
+% [nextlat,nextlon,nextm,nextt]=mpredict(float_name,f)
 %
 % Predicts and plots future mermaid location and returns future position 
 % and velocity
@@ -17,14 +18,14 @@ function varargout=mpredict(float_name,f,points,order,next)
 %
 % nextlat     The latitude prediction a week later
 % nextlon     The longitude prediction a week later
-% mpredict    The predicted magnitude of velocity
-% tpredict    The predicted angle of velocity
+% nextm       The predicted magnitude of velocity
+% nextt       The predicted angle of velocity
 %
-% Last modified by fge@princeton.edu on 6/26/19
+% Last modified by fge@princeton.edu on 6/27/19
 
 defval('float_name','P017')
-defval('points',6);
-defval('order',2);
+defval('points',8);
+defval('order',1);
 defval('next',604800);
 [name,t,lat,lon]=mread(float_name);
 
@@ -53,16 +54,8 @@ switch input
         end
         
         % predicting new latitude and longitude
-        [mcurve,S1,mu1] = polyfit(timeframe,mset,order);
-        [tcurve,S2,mu2] = polyfit(timeframe,tset,order);
-        mpredict = polyval(mcurve,dive_time(end)+next,S1,mu1);
-        tpredict = polyval(tcurve,dive_time(end)+next,S2,mu2);
-        latpredict = mpredict * sin(tpredict);
-        lonpredict = mpredict * cos(tpredict);
-        latdist = latpredict * next;
-        londist = lonpredict * next;
-        changelat = distdim(latdist,'m','deg','earth');
-        changelon = distdim(londist,'m','deg','earth');
+        [changelat,changelon,nextm,nextt]=llpredict(mset,tset,timeframe,...
+            next,order);
         nextlat = changelat + lat(end);
         nextlon = changelon + lon(end);
         
@@ -78,5 +71,5 @@ switch input
 end
 
 % Optional output
-varns={nextlat,nextlon,mpredict,tpredict};
+varns={nextlat,nextlon,nextm,nextt};
 varargout=varns(1:nargout);
