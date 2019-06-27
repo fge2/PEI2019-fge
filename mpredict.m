@@ -24,8 +24,8 @@ function varargout=mpredict(float_name,f,points,order,next)
 % Last modified by fge@princeton.edu on 6/27/19
 
 defval('float_name','P017')
-defval('points',8);
-defval('order',1);
+defval('points',4);
+defval('order',2);
 defval('next',604800);
 [name,t,lat,lon]=mread(float_name);
 
