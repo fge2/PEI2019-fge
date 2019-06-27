@@ -8,8 +8,8 @@ function varargout=mpredict2(float_name,finish,points,order,surfaces)
 %
 % float_name  The name of the mermaid float
 % finish      The index which you want to predict afterwards
-%             Upper limit is the 'length of the dive vector-1' given from
-%             indexsplit()
+%             Upper limit is the 'length of the dive vector-surfaces' 
+%             given from indexsplit()
 % points      The number of previous points to perform regression on
 % order       The order of regression
 % surfaces    The prediction that number of surfaces later
@@ -24,7 +24,7 @@ function varargout=mpredict2(float_name,finish,points,order,surfaces)
 
 defval('float_name','P017');
 defval('points',4);
-defval('order',3);
+defval('order',2);
 defval('surfaces',1);
 [name,t,lat,lon]=mread(float_name);
 [mag,theta]=vplt(float_name,0);
@@ -42,7 +42,7 @@ for i=2:points
 end
 
 % predicting new latitude and longitude
-next=dive_time(finish+surfaces);
+next=sum(dive_time(finish+1:finish+surfaces));
 [changelat,changelon,nextm,nextt]=llpredict(mset,tset,timeframe,...
     next,order);
 nextlat=changelat + lat(dive(finish));

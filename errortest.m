@@ -21,16 +21,17 @@ function varargout=errortest(float_name,points,order,surfaces)
 defval('float_name','P017');
 defval('points',4);
 defval('order',2);
+defval('surfaces',1);
 
 [name,t,lat,lon]=mread(float_name);
 [dive,~]=indexsplit(t);
 n=length(dive);
-latguess=zeros(1,n-1);
-longuess=zeros(1,n-1);
-res=zeros(1,n-1);
+latguess=zeros(1,n-surfaces);
+longuess=zeros(1,n-surfaces);
+res=zeros(1,n-surfaces);
 
 % calculate residue/error
-for i=points:n-1
+for i=points:n-surfaces
     [nextlat,nextlon]=mpredict2(float_name,i,points,order,surfaces);
     res(i)=distance(nextlat,nextlon,lat(dive(i+1)),lon(dive(i+1)));
     if lat(dive(i+1))<nextlat
