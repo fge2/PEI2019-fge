@@ -1,5 +1,5 @@
 function varargout=errortest(float_name,points,order,surfaces)
-% [res,mu,sd,rr]=errortest(float_name,points,order)
+% [res,mu,sd,rr]=errortest(float_name,points,order,surfaces)
 %
 % Plots histogram of errors resulting from mpredict2
 %
@@ -8,6 +8,8 @@ function varargout=errortest(float_name,points,order,surfaces)
 % float_name  The name of the mermaid float
 % points      The number of previous points to perform regression on
 % order       The order of regression
+% surfaces    The prediction that number of surfaces later
+%             ex. surfaces=2 predicts 2 surfaces later
 %
 % OUTPUT:
 %
