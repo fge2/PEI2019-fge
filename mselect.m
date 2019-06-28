@@ -79,7 +79,7 @@ switch input
         closest(closest==0)=inf;
         [value,i]=min(closest);
         mermaid=strcat('P0',sprintf('%02d',i));
-        loc=coords(i,:)
+        loc=coords(i,:);
         time=times(i)/seconds;
 
         % plot
