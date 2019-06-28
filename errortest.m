@@ -53,6 +53,7 @@ xlabel('Prediction Residue (Degrees)');
 ylabel('Frequency');
 subplot(2,1,2)
 histogram(abs(res),20,'Normalization','cdf')
+title('CDF of Residues');
 xlabel('Residue Magnitude (Degrees)');
 ylabel('Probability');
 

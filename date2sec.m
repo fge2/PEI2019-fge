@@ -1,7 +1,8 @@
 function ellapsed_time=date2sec(t)
 % ellapsed_time=date2sec(t)
 % 
-% Converts datetime array into ellapsed_time column array in seconds
+% Converts datetime array into column array of ellapsed_time since previous
+% point in seconds
 %
 % INPUT:
 %  

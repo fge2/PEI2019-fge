@@ -1,6 +1,6 @@
-function varargout=mpredict(float_name,f,points,order,next)
-% [nextlat,nextlon,nextm,nextt]=mpredict(float_name,f,points,order,next)
-% [nextlat,nextlon,nextm,nextt]=mpredict(float_name,f)
+function varargout=mpredict(float_name,f,next,surfaces,points,order)
+% [nextlat,nextlon,nextm,nextt,next]=mpredict(float_name,f,next,surfaces,points,order)
+% [nextlat,nextlon,nextm,nextt,next]=mpredict(float_name,f)
 %
 % Predicts and plots future mermaid location and returns future position 
 % and velocity
@@ -9,10 +9,11 @@ function varargout=mpredict(float_name,f,points,order,next)
 %
 % float_name  The name of the mermaid float
 % f           The figure handle of positionplt
+% next        The hours out that is predicted 
+% surfaces    The prediction that number of surfaces later
+%             ex. surfaces=2 predicts 2 surfaces later, default=1
 % points      The number of previous points to perform regression on
 % order       The order of regression
-% next        The time in seconds after the final point which is to be 
-%             predicted
 %
 % OUTPUT:
 %
@@ -20,13 +21,14 @@ function varargout=mpredict(float_name,f,points,order,next)
 % nextlon     The longitude prediction a week later
 % nextm       The predicted magnitude of velocity
 % nextt       The predicted angle of velocity
+% next        The time of the new prediction in seconds
 %
-% Last modified by fge@princeton.edu on 6/27/19
+% Last modified by fge@princeton.edu on 6/28/19
 
 defval('float_name','P017')
 defval('points',4);
 defval('order',2);
-defval('next',604800);
+defval('surfaces',1);
 [name,t,lat,lon]=mread(float_name);
 
 input=1;
@@ -54,22 +56,29 @@ switch input
         end
         
         % predicting new latitude and longitude
+        defval('next',mean(dive_time)*surfaces/3600);
+        next=next*3600;
         [changelat,changelon,nextm,nextt]=llpredict(mset,tset,timeframe,...
             next,order);
         nextlat = changelat + lat(end);
         nextlon = changelon + lon(end);
         
         % plotting prediction
-        figure(f)
-        hold on
-        geoshow(nextlat,nextlon,'DisplayType','Point','Marker','o',...
-        'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',5,...
-        'DisplayName','Prediction')
-        trajectory = quiverm(lat(end),lon(end),changelat,changelon,'c');
-        trajectory(1).HandleVisibility = 'off';
-        trajectory(2).HandleVisibility = 'off'; 
+        % plot or not
+        plot=0;
+        
+        if plot
+            figure(f)
+            hold on
+            geoshow(nextlat,nextlon,'DisplayType','Point','Marker','o',...
+            'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',5,...
+            'DisplayName','Prediction')
+            trajectory = quiverm(lat(end),lon(end),changelat,changelon,'c');
+            trajectory(1).HandleVisibility = 'off';
+            trajectory(2).HandleVisibility = 'off'; 
+        end
 end
 
 % Optional output
-varns={nextlat,nextlon,nextm,nextt};
+varns={nextlat,nextlon,nextm,nextt,next};
 varargout=varns(1:nargout);
