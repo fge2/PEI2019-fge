@@ -1,5 +1,5 @@
 function varargout=mselect(input)
-% [coords,mermaid,loc,value,time]=mselect
+% [coords,mermaid,loc,value,time]=mselect(input)
 %
 % Selects which mermaid will surfaces closest to a given path at a similar
 % timeframe
@@ -90,6 +90,7 @@ switch input
         legend(p,'Closest to Path','Location','NorthWest');
         launch=date_time{1};
         textm(loc(1),loc(2),datestr(datenum(launch)+time,'mm-dd-yy'));
+        textm(loc(1)+1,loc(2),mermaid);
 
     case 2
         % closest mermaid that surfaces near ship
@@ -98,20 +99,21 @@ switch input
         for i=mermaids
             mintime=inf;
             for j=7:20    
-                timepass=abs(times(i)-(datenum(date_time{j})-datenum(date_time{1})));
+                timepass=abs(times(i)-(datenum(date_time{j})-datenum(date_time{1}))*seconds);
                 if timepass<mintime
                     mintime=timepass;
                     minindex=j;
                 end
-                closetimes(i)=mintime;
-                closeindex(i)=minindex;
             end
+            closetimes(i)=mintime;
+            closeindex(i)=minindex;
         end
-
+        
+        newcoords=zeros(1,25);
         for i=mermaids
-            newcoords=distance(coords(i,1),coords(i,2),slat(closeindex(i)),slon(closeindex(i)));
+            newcoords(i)=distance(coords(i,1),coords(i,2),slat(closeindex(i)),slon(closeindex(i)));
         end
-        newcoords(1)=inf;
+        newcoords(newcoords==0)=inf;
         [value,i]=min(newcoords);
         mermaid=strcat('P0',sprintf('%02d',i));
         loc=coords(i,:);
@@ -126,6 +128,8 @@ switch input
         legend(p,'Closest Time Correspondence','Location','NorthWest');
         launch=date_time{1};
         textm(loc(1),loc(2),datestr(datenum(launch)+time,'mm-dd-yy'));
+        textm(loc(1)+1,loc(2),mermaid);
+
 end
     
 % Optional output
