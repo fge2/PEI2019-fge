@@ -56,8 +56,9 @@ switch input
         % plot all mermaid locations for qualitative view
         shipplt;
         hold on;
-        geoshow(coords(:,1),coords(:,2),'DisplayType','Point','Marker','o',...
+        p=geoshow(coords(:,1),coords(:,2),'DisplayType','Point','Marker','o',...
             'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',5);
+        legend(p,'Mermaid Locations','Location','NorthWest');
         x=1:25;
         launch=date_time{1};
         textm(coords(:,1)+1,coords(:,2),strcat(sprintfc('%d',x)));
