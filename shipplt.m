@@ -35,6 +35,7 @@ lonlim=[floor(2*min(slon))/2,ceil(2*max(slon))/2];
 f = figure;
 worldmap(latlim, lonlim);
 geoshow(slat,slon,'DisplayType','Point','Marker','o','MarkerFaceColor','red','Markersize',5);
+geoshow(slat,slon);
 textm(slat,slon,datestr(date_time,'mm-dd-yy'));
 title("Path of Ship");
 xlabel('Longitude');
@@ -44,7 +45,6 @@ ylabel('Latitude');
 dellat=slat(2:n)-slat(1:n-1);
 dellon=slon(2:n)-slon(1:n-1);
 hold on
-q=quiverm(slat(1:n-1),slon(1:n-1),dellat,dellon);
 
 % Optional output
 varns={f};
