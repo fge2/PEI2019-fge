@@ -26,11 +26,11 @@ lonlim=[floor(2*min(lon))/2,ceil(2*max(lon))/2];
 f = figure;
 worldmap(latlim, lonlim);
 geoshow(lat,lon,'DisplayType','Point','Marker','o','MarkerFaceColor','red','Markersize',5);
-handle=title(strcat('Path of',{' '},name));
+title(strcat('Path of',{' '},name));
 %p=handle.Position
 %handle.Position=[p(1) p(2)+0.02e+06 p(3)];
-xlabel('Latitude');
-ylabel('Longitude');
+%xlabel('Latitude');
+%ylabel('Longitude');
 
 % Surfacing dates
 [dive,surface]=indexsplit(t);
@@ -44,7 +44,7 @@ j=surface-1;
 d = quiverm(lat(i),lon(i),dellat(i),dellon(i));
 s = quiverm(lat(j),lon(j),dellat(j),dellon(j),'m');
 legend([d(1);s(1)],'Underwater Displacement Vectors',...
-    'Surface Level Displacement Vectors','Location','southeast')
+    'Surface Level Displacement Vectors','Location','northwest')
 hold off
 
 % Optional output

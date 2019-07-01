@@ -1,5 +1,5 @@
-function varargout=mselect(input)
-% [coords,mermaid,loc,value,time]=mselect(input)
+function varargout=mselect(input,surfaces)
+% [coords,mermaid,loc,value,time]=mselect(input,surfaces)
 %
 % Selects which mermaid will surfaces closest to a given path at a similar
 % timeframe
@@ -9,6 +9,7 @@ function varargout=mselect(input)
 % input        0 plot all mermaid points
 %              1 plot closest wrt path
 %              2 plot closest wrt time correspondence
+% surfaces     The prediction that number of surfaces later 
 %
 % OUTPUT:
 %
@@ -19,6 +20,8 @@ function varargout=mselect(input)
 % time         The time of surfacoing in days after the ship sets off 
 %
 % Last modified by fge@princeton.edu on 6/28/19
+
+defval('surfaces',1);
 
 % ship data
 date_time = [{'05-Aug-2019 08:00:00'},{'06-Aug-2019 18:00:00'},{'07-Aug-2019 08:00:00'},...
@@ -38,17 +41,22 @@ slat = [-17.3, -12.0, -10.0, -8.0, -6.0, -5.0, -6.0, -8.0, -13.0, -17.0, -22.0,.
     -25.63, -25.0, -24.0, -22.2, -22.2];
 
 seconds=3600*24;
+launch=date_time{1};
+%run code from current day
+%launch=datetime('today');
 
 % surface coords
 coords=zeros(25,2);
 times=zeros(1,25);
-mermaids=[1:2 4:13 16:24];
+mermaids=[1:13 16:25];
+
+% endtime=zeros(1,25);
 for i=mermaids
     float_name=strcat('P0',sprintf('%02d',i));
-    [nextlat,nextlon,~,~,time]=mpredict(float_name,[]);
+    [nextlat,nextlon,~,~,time]=mpredict(float_name,[],[],surfaces);
     coords(i,1)=nextlat;
     coords(i,2)=nextlon;
-    times(i)=time;
+    times(i)=time;    
 end
 
 switch input
@@ -56,12 +64,16 @@ switch input
         % plot all mermaid locations for qualitative view
         shipplt;
         hold on;
-        geoshow(coords(:,1),coords(:,2),'DisplayType','Point','Marker','o',...
+        p=geoshow(coords(:,1),coords(:,2),'DisplayType','Point','Marker','o',...
             'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',5);
+        legend(p,'Mermaid Locations','Location','NorthWest');
         x=1:25;
-        launch=date_time{1};
         textm(coords(:,1)+1,coords(:,2),strcat(sprintfc('%d',x)));
         textm(coords(:,1),coords(:,2),datestr(datenum(launch)+times(x)/seconds,'mm-dd-yy'));
+        mermaid=[];
+        loc=[];
+        value=[];
+        time=[];
         
     case 1
         % closest mermaid that surfaces on the path of ship independent of time
@@ -88,7 +100,6 @@ switch input
         p=geoshow(loc(1),loc(2),'DisplayType','Point','Marker','o',...
                 'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',10);
         legend(p,'Closest to Path','Location','NorthWest');
-        launch=date_time{1};
         textm(loc(1),loc(2),datestr(datenum(launch)+time,'mm-dd-yy'));
         textm(loc(1)+1,loc(2),mermaid);
 
@@ -99,7 +110,7 @@ switch input
         for i=mermaids
             mintime=inf;
             for j=7:20    
-                timepass=abs(times(i)-(datenum(date_time{j})-datenum(date_time{1}))*seconds);
+                timepass=abs(times(i)-(datenum(date_time{j})-datenum(launch))*seconds);
                 if timepass<mintime
                     mintime=timepass;
                     minindex=j;
@@ -123,13 +134,11 @@ switch input
         shipplt;
         hold on
         p=geoshow(loc(1),loc(2),'DisplayType','Point','Marker','o',...
-                'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',10, ...
+                'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',10,...
                 'DisplayName','Closest Time Correspondence');
         legend(p,'Closest Time Correspondence','Location','NorthWest');
-        launch=date_time{1};
         textm(loc(1),loc(2),datestr(datenum(launch)+time,'mm-dd-yy'));
         textm(loc(1)+1,loc(2),mermaid);
-
 end
     
 % Optional output

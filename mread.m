@@ -33,6 +33,11 @@ lat=str2double(latstr);
 lon=str2double(lonstr);
 t=datetime([strcat(date,{' '},time)],'InputFormat','dd-MMM-yyyy HH:mm:ss');
 
+index=find(isnan(lat));
+lat(index)=[];
+lon(index)=[];
+t(index)=[];
+
 % Optional output
 varns={name,t,lat,lon};
 varargout=varns(1:nargout);
