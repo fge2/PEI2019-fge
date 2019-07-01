@@ -58,7 +58,7 @@ for i=mermaids
     coords(i,2)=nextlon;
     times(i)=time;    
 end
-coords
+
 switch input
     case 0
         % plot all mermaid locations for qualitative view
@@ -70,6 +70,10 @@ switch input
         x=1:25;
         textm(coords(:,1)+1,coords(:,2),strcat(sprintfc('%d',x)));
         textm(coords(:,1),coords(:,2),datestr(datenum(launch)+times(x)/seconds,'mm-dd-yy'));
+        mermaid=[];
+        loc=[];
+        value=[];
+        time=[];
         
     case 1
         % closest mermaid that surfaces on the path of ship independent of time
