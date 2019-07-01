@@ -12,6 +12,7 @@ function varargout=mpredict(float_name,f,next,surfaces,points,order)
 % next        The hours out that is predicted 
 % surfaces    The prediction that number of surfaces later
 %             ex. surfaces=2 predicts 2 surfaces later, default=1
+%             if there is a surface input then do not use a next input
 % points      The number of previous points to perform regression on
 % order       The order of regression
 %
