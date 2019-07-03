@@ -24,7 +24,7 @@ function varargout=readweek(year,start)
 if mod(start,7)==0
     strcombine='';
     for i=0:6
-        strcombine=strcat(strcombine,ascreadin(year,start+i));
+        strcombine=strcat(strcombine,newline,ascreadin(year,start+i));
     end
     [time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=parse8ways(strcombine);
 end
