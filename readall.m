@@ -1,4 +1,4 @@
-function varargout=readany(year,start,length)
+function varargout=readall(year)
 % varargout=readany(year,start,length)
 %
 % This function reads any timeframe 
@@ -13,9 +13,7 @@ function varargout=readany(year,start,length)
 %
 % last modified by fge@princeton.edu on 7/2/19
 
-listlength=10080;
-
-files=dir('/home/fge/PTONcGPS/WeatherData/2018/*.asc')
+files=dir(strcat('/home/fge/PTONcGPS/WeatherData/',year,'/*.asc'));
 strcombine='';
 for file=files
     a=fileread(file);
@@ -27,8 +25,11 @@ end
 z=find(time==0);
 z=flip(z);
 for i=z
-    time(z:end)=time(z:end)+time(z-1);
+    if i > 1
+        time(i:end)=time(i:end)+time(i-1);
+    end
 end
+time=time-time(1);
 
 % Optional output
 varns={time,Dm,Sm,Ta,Ua,Pa,Rc,Hc};
