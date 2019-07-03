@@ -1,5 +1,5 @@
 function varargout=readall(year)
-% varargout=readany(year,start,length)
+% [time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=readall(year)
 %
 % This function reads any timeframe 
 %
@@ -13,20 +13,22 @@ function varargout=readall(year)
 %
 % last modified by fge@princeton.edu on 7/2/19
 
-files=dir(strcat('/home/fge/PTONcGPS/WeatherData/',num2str(year),'/*.asc'));
-strcombine=strings;
-for i=1:length(files)
-    a=fileread(strcat('/home/fge/PTONcGPS/WeatherData/',num2str(year),'/',files(i).name));
-    strcombine=strcat(strcombine,{newline},a);
+files=dir(strcat('/home/fge/PTONcGPS/WeatherData/',year,'/*.asc'));
+data=[];
+for i=2:length(files)
+    filename=files(i).name;
+    output=cell2mat(textscan(fopen(strcat('/home/fge/PTONcGPS/WeatherData/'...
+        ,year,'/',filename)),'%f %f %f %f %f %f %f %f'));
+    data=[data; output];
 end
-strcombine=cell2mat(strcombine);
-[time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=parse8ways(strcombine(2:end));
+[time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=parse8ways(data);
 
 z=find(time==0);
 z=flip(z);
-for i=z
-    if i > 1
-        time(i:end)=time(i:end)+time(i-1);
+
+for j = z'
+    if j > 1
+        time(j:end)=time(j:end)+time(j-1);
     end
 end
 time=time-time(1);

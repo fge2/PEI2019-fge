@@ -22,11 +22,11 @@ function varargout=readweek(year,start)
 % last modified by fge@princeton.edu on 7/2/2019
 
 if mod(start,7)==0
-    strcombine=strings;
+    data=[];
     for i=0:6
-        strcombine=cell2mat(strcat(strcombine,{newline},ascreadin(year,start+i)));
+        data=[data; ascreadin(year,start+i)];
     end
-    [time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=parse8ways(strcombine(2:end));
+    [time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=parse8ways(data);
 end
 
 % Optional output

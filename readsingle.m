@@ -21,8 +21,7 @@ function varargout=readsingle(year,number)
 %
 % last modified by fge@princeton.edu on 7/2/2019
 
-datastr=strcat('',ascreadin(year,number));
-[time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=parse8ways(datastr);
+[time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=parse8ways(ascreadin(year,number));
 
 % Optional output
 varns={time,Dm,Sm,Ta,Ua,Pa,Rc,Hc};
