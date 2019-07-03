@@ -17,7 +17,6 @@ files=dir(strcat('/home/fge/PTONcGPS/WeatherData/',year,'/*.asc'));
 strcombine='';
 for file=files
     a=fileread(file);
-    a=extractAfter(a,'--------------------------------------- ');
     strcombine=strcat(strcombine,a);
 end
 [time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=parse8ways(strcombine);
