@@ -18,8 +18,7 @@ yearstr=num2str(year);
 filename=char(strcat('/home/fge/PTONcGPS/WeatherData/',yearstr,'/pton',...
     sprintf('%03d',number),'0','.',extractBetween(yearstr,3,4),...
     '__SBF_ASCIIIn.asc'));
-a=fileread(filename);
-datastr=extractAfter(a,'--------------------------------------- ');
+datastr=fileread(filename);
 
 % Optional output
 varns={datastr};

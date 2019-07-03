@@ -14,12 +14,13 @@ function varargout=readall(year)
 % last modified by fge@princeton.edu on 7/2/19
 
 files=dir(strcat('/home/fge/PTONcGPS/WeatherData/',num2str(year),'/*.asc'));
-strcombine='';
-for file=files
-    a=fileread(file);
-    strcombine=strcat(strcombine,a);
+strcombine=strings;
+for i=1:length(files)
+    a=fileread(strcat('/home/fge/PTONcGPS/WeatherData/',num2str(year),'/',files(i).name));
+    strcombine=strcat(strcombine,{newline},a);
 end
-[time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=parse8ways(strcombine);
+strcombine=cell2mat(strcombine);
+[time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=parse8ways(strcombine(2:end));
 
 z=find(time==0);
 z=flip(z);

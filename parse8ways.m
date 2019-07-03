@@ -21,7 +21,6 @@ function varargout=parse8ways(datastr)
 % last modified by fge@princeton.edu on 7/2/2019
 
 datastr=strsplit(datastr);
-datastr=datastr(2:end);
 
 % split
 time=datastr(1:8:end);
