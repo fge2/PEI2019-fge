@@ -5,8 +5,8 @@ function varargout=readsingle(year,number)
 %
 % INPUT:
 %
-% year
-% number
+% year         year of data to be analyzed
+% number       the file number
 % 
 % OUTPUT:
 %

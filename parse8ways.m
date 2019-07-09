@@ -5,7 +5,7 @@ function varargout=parse8ways(data)
 %
 % INPUT:
 %
-% data      The data
+% data      The data from ascreadin
 % 
 % OUTPUT:
 %

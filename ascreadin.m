@@ -5,12 +5,12 @@ function varargout=ascreadin(year,number)
 %
 % INPUT:
 %
-% year
-% number
+% year         year of data to be analyzed
+% number       the file number
 % 
 % OUTPUT:
 %
-% output 
+% output       the outputted array by textscanning the file
 %
 % last modified by fge@princeton.edu on 7/2/2019
 

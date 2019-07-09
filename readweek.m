@@ -5,8 +5,8 @@ function varargout=readweek(year,start)
 %
 % INPUT:
 %
-% year
-% start
+% year        The year to be analyzed
+% start       The start file number that is a multiple of 7
 % 
 % OUTPUT:
 %
