@@ -1,5 +1,5 @@
 function varargout=filtertest(filename,order,Wn)
-% f=filtertest(filename,order,Wn)
+% [xfilt,f]=filtertest(filename,order,Wn)
 %
 % This function plots the SeisData and a given bandpass filter using butter
 % and the filtered data
@@ -41,6 +41,6 @@ xfilt=filter(B,A,S);
 plotsac(xfilt,HdrData);
 
 % Optional output
-varns={f};
+varns={xfilt,f};
 varargout=varns(1:nargout);
 
