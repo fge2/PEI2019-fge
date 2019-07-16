@@ -1,0 +1,14 @@
+function varargout=getmags(minmag)
+% mags=getmags(minmag)
+%
+% This function returns the magnitudes of all ear
+
+ev = irisFetch.Events('starttime','2019-07-01','endtime','2019-07-08','minimummagnitude',minmag);
+maginfo=[ev(1:length(ev)).Magnitudes];
+mags=[maginfo(1:length(maginfo)).Value];
+
+% Optional output
+varns={mags};
+varargout=varns(1:nargout);
+
+
