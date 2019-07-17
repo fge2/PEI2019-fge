@@ -27,7 +27,7 @@ Hour=hour(times);
 Minute=minute(times);
 index=find(Minute-1>=55);
 Hour(index)=Hour(index)+1;
-xfiles=string(strcat('PP.S0001.00.HHX.D.2019.18',num2str(Day),'.',num2str(Hour),'0000.SAC'));
+xfiles=string(strcat('PP.S0001.00.HHX.D.2019.18',num2str(Day),'.',sprintf('%02d',num2str(Hour)),'0000.SAC'));
 yfiles=string(strcat('PP.S0001.00.HHY.D.2019.18',num2str(Day),'.',num2str(Hour),'0000.SAC'));
 zfiles=string(strcat('PP.S0001.00.HHZ.D.2019.18',num2str(Day),'.',num2str(Hour),'0000.SAC'));
 
