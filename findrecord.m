@@ -12,7 +12,10 @@ function varargout=findrecord(minmag)
 %
 % OUTPUT:
 %
-% 
+% xfiles         xfiles of local seismometers at approximate time of
+%                earthquake
+% yfiles         yfiles
+% zfiles         zfiles
 %
 % Last modified by fge@princeton.edu on 7/16/19
 
@@ -22,10 +25,12 @@ times=datetime(datevec(times));
 Day=day(times);
 Hour=hour(times);
 Minute=minute(times);
+index=find(Minute-1>=55);
+Hour(index)=Hour(index)+1;
 xfiles=string(strcat('PP.S0001.00.HHX.D.2019.18',num2str(Day),'.',num2str(Hour),'0000.SAC'));
 yfiles=string(strcat('PP.S0001.00.HHY.D.2019.18',num2str(Day),'.',num2str(Hour),'0000.SAC'));
 zfiles=string(strcat('PP.S0001.00.HHZ.D.2019.18',num2str(Day),'.',num2str(Hour),'0000.SAC'));
 
 % Optional output
-varns={};
+varns={xfiles,yfiles,zfiles};
 varargout=varns(1:nargout);
