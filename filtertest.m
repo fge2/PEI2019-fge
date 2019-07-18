@@ -34,30 +34,33 @@ plotsac(S,HdrData);
 subplot(212)
 plotsac(xfilt,HdrData);
 
-figure
-subplot(211)
-plot(0:2/n:1-2/n,smag(1:floor(n/2)));
-title('Magnitude of Signal')
-xlabel('Normalized Frequency (pi rad/samples)');
-ylabel('Magnitude');
-subplot(212)
-plot(0:2/n:1-2/n,sangle(1:floor(n/2)));
-title('Phase Response of Signal')
-xlabel('Normalized Frequency (pi rad/samples)');
-ylabel('Phase');
+%plotornot
+plot=0;
+if plot
+    figure
+    subplot(211)
+    plot(0:2/n:1-2/n,smag(1:floor(n/2)));
+    title('Magnitude of Signal')
+    xlabel('Normalized Frequency (pi rad/samples)');
+    ylabel('Magnitude');
+    subplot(212)
+    plot(0:2/n:1-2/n,sangle(1:floor(n/2)));
+    title('Phase Response of Signal')
+    xlabel('Normalized Frequency (pi rad/samples)');
+    ylabel('Phase');
 
-figure
-subplot(211)
-plot(0:2/n:1-2/n,abs(freqz(B,A,floor(n/2))))
-title('Magnitude Gain Response')
-xlabel('Normalized Frequency (pi rad/samples)');
-ylabel('Magnitude');
-subplot(212)
-plot(0:2/n:1-2/n,angle(freqz(B,A,floor(n/2))))
-title('Phase Response')
-xlabel('Normalized Frequency (pi rad/samples)');
-ylabel('Phase');
-
+    figure
+    subplot(211)
+    plot(0:2/n:1-2/n,abs(freqz(B,A,floor(n/2))))
+    title('Magnitude Gain Response')
+    xlabel('Normalized Frequency (pi rad/samples)');
+    ylabel('Magnitude');
+    subplot(212)
+    plot(0:2/n:1-2/n,angle(freqz(B,A,floor(n/2))))
+    title('Phase Response')
+    xlabel('Normalized Frequency (pi rad/samples)');
+    ylabel('Phase');
+end
 
 % Optional output
 varns={xfilt,f};
