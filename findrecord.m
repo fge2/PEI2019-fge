@@ -1,5 +1,5 @@
 function varargout=findrecord(minmag)
-% []=findrecord(minmag)
+% [xfiles,yfiles,zfiles,Month,Day,Hour,Minute]=findrecord(minmag)
 %
 % This function returns nearest records of earthquakes above a certain
 % threshold
@@ -22,13 +22,14 @@ function varargout=findrecord(minmag)
 ev = irisFetch.Events('starttime','2019-07-01','endtime','2019-07-08','minimummagnitude',minmag);
 times=extractfield(ev,'PreferredTime');
 times=datetime(datevec(times));
+Month=month(times);
 Day=day(times);
 Hour=hour(times);
+Minute=minute(times);
 Hourstr=strings(length(Hour),1);
 for i=1:length(Hour)
     Hourstr(i)=sprintf('%02d',Hour(i));
 end
-Minute=minute(times);
 index=find(Minute-1>=55);
 Hour(index)=Hour(index)+1;
 xfiles=string(strcat('PP.S0001.00.HHX.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
@@ -36,5 +37,5 @@ yfiles=string(strcat('PP.S0001.00.HHY.D.2019.18',num2str(Day+1),'.',Hourstr,'000
 zfiles=string(strcat('PP.S0001.00.HHZ.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
 
 % Optional output
-varns={xfiles,yfiles,zfiles};
+varns={xfiles,yfiles,zfiles,Month,Day,Hour,Minute};
 varargout=varns(1:nargout);
