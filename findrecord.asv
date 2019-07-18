@@ -24,16 +24,16 @@ times=extractfield(ev,'PreferredTime');
 times=datetime(datevec(times));
 Day=day(times);
 Hour=hour(times);
-Hourstr=strings(length(Hour),1);
+Hourstr=ones(1,length(Hour));
 for i=1:length(Hour)
     Hourstr(i)=sprintf('%02d',Hour(i));
 end
 Minute=minute(times);
 index=find(Minute-1>=55);
 Hour(index)=Hour(index)+1;
-xfiles=string(strcat('PP.S0001.00.HHX.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
-yfiles=string(strcat('PP.S0001.00.HHY.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
-zfiles=string(strcat('PP.S0001.00.HHZ.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
+xfiles=string(strcat('PP.S0001.00.HHX.D.2019.18',num2str(Day)+1,'.',Hourstr,'0000.SAC'));
+yfiles=string(strcat('PP.S0001.00.HHY.D.2019.18',num2str(Day)+1,'.',Hourstr,'0000.SAC'));
+zfiles=string(strcat('PP.S0001.00.HHZ.D.2019.18',num2str(Day)+1,'.',Hour,'0000.SAC'));
 
 % Optional output
 varns={xfiles,yfiles,zfiles};
