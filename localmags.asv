@@ -23,7 +23,7 @@ monthstr=cell2mat(month(times,'name'));
 
 xfilenames=strcat('/data2/seismometer/',monthstr,num2str(day(times)),'/',xfiles);
 yfilenames=strcat('/data2/seismometer/',monthstr,num2str(day(times)),'/',yfiles);
-zfilenames=strcat('/data2/seismometer/',monthstr,num2str(day(times)),'/',zfiles);
+zfilenames=strcat('/data2/seismometer/',cell2ma(month(times,'name')),num2str(day(times)),'/',zfiles);
 Seisx=readsac(xfilenames);
 Seisy=readsac(yfilenames);
 Seisz=readsac(zfilenames);
