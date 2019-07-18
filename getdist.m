@@ -23,7 +23,7 @@ Guyotlon=-74.65;
 ev = irisFetch.Events('starttime','2019-07-01','endtime','2019-07-08','minimummagnitude',minmag);
 lats=[ev.PreferredLatitude];
 lons=[ev.PreferredLongitude];
-dists=distance(lats,lons,Guyotlat,Guyotlon);
+dists=(distance(lats,lons,Guyotlat,Guyotlon));
 
 % Optional output
 varns={dists};
