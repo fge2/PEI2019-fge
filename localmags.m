@@ -17,20 +17,32 @@ function varargout=localmags(minmag)
 % Last modified by fge@princeton.edu on 7/18/19
 
 mags=getmags(minmag);
-dists=getmags(minmag);
+dists=getdist(minmag);
 [xfiles,yfiles,zfiles,times]=findrecord(minmag);
-monthstr=cell2mat(month(times,'name'));
+monthstr=char(month(times,'name'));
+n=length(xfiles);
 
-xfilenames=strcat('/data2/seismometer/',monthstr,num2str(day(times)),'/',xfiles);
-yfilenames=strcat('/data2/seismometer/',monthstr,num2str(day(times)),'/',yfiles);
-zfilenames=strcat('/data2/seismometer/',monthstr,num2str(day(times)),'/',zfiles);
-Seisx=readsac(xfilenames);
-Seisy=readsac(yfilenames);
-Seisz=readsac(zfilenames);
-localmagx=max(Seisx,[],2);
+xfilenames=strcat('/data2/seismometer/',monthstr,char(num2str(day(times))),'/',xfiles);
+yfilenames=strcat('/data2/seismometer/',monthstr,char(num2str(day(times))),'/',yfiles);
+zfilenames=strcat('/data2/seismometer/',monthstr,char(num2str(day(times))),'/',zfiles);
+localxmax=zeros(1,n);
+localymax=zeros(1,n);
+localzmax=zeros(1,n);
+
+for i=1:n
+    Seisx=readsac(xfilenames(i,:));
+    localxmax(i)=max(Seisx);
+    Seisy=readsac(yfilenames(i,:));
+    localymax(i)=max(Seisy);
+    Seisz=readsac(zfilenames(i,:));
+    localzmax(i)=max(Seisz);
+end
 
 figure
-scatter3(mags,dists,localmagx);
+stem3(mags,dists,localxmax);
+xlabel('Magnitude')
+ylabel('Distances from Guyot (degrees)')
+zlabel('Measured Local Mags')
 
 
 % Optional output

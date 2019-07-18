@@ -26,17 +26,17 @@ times=datetime(datevec(times));
 Day=day(times);
 Hour=hour(times);
 Minute=minute(times);
+%%%%%%%%%%%
+index=find(Minute-1>=55);
+Hour(index)=Hour(index)+1;
+%%%%%%%%%%%
 Hourstr=strings(length(Hour),1);
 for i=1:length(Hour)
     Hourstr(i)=sprintf('%02d',Hour(i));
 end
-%%%%%%%%%%%
-index=find(Minute-1>=55);
-%%%%%%%%%%%
-Hour(index)=Hour(index)+1;
-xfiles=string(strcat('PP.S0001.00.HHX.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
-yfiles=string(strcat('PP.S0001.00.HHY.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
-zfiles=string(strcat('PP.S0001.00.HHZ.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
+xfiles=char(strcat('PP.S0001.00.HHX.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
+yfiles=char(strcat('PP.S0001.00.HHY.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
+zfiles=char(strcat('PP.S0001.00.HHZ.D.2019.18',num2str(Day+1),'.',Hourstr,'0000.SAC'));
 
 % Optional output
 varns={xfiles,yfiles,zfiles,times};
