@@ -36,21 +36,21 @@ xlabel('Frequency (pi rad/samples)')
 ylabel('Magnitude')
 
 ah(4)=subplot(324);
-plot(axis,angle(H),'c')
+plot(axis,angle(H),'r')
 title('Filter Phase Response')
 xlabel('Frequency (pi rad/samples)')
 ylabel('Phase')
 
 ah(5)=subplot(325);
 xfilt=filter(B,A,x);
-plot(t,xfilt)
+plot(t,xfilt,'r')
 title('1 Pass Filtered')
 xlabel('t')
 ylabel('x(t)')
 
 ah(6)=subplot(326);
 xfilt2=flipud(filter(B,A,flipud(xfilt(:))));
-plot(t,xfilt2)
+plot(t,xfilt2,'r')
 title('2 Pass Filtered')
 xlabel('t')
 ylabel('x(t)')
