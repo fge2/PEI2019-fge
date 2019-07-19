@@ -1,5 +1,5 @@
-function varargout=mselect(input,surfaces)
-% [coords,mermaid,loc,value,time]=mselect(input,surfaces)
+function varargout=mselect(input,k,surfaces)
+% [coords,mermaid,loc,value,time]=mselect(input,k,surfaces)
 %
 % Selects which mermaid will surfaces closest to a given path at a similar
 % timeframe
@@ -9,6 +9,7 @@ function varargout=mselect(input,surfaces)
 % input        0 plot all mermaid points
 %              1 plot closest wrt path
 %              2 plot closest wrt time correspondence
+% k            Number of floats to return
 % surfaces     The prediction that number of surfaces later 
 %
 % OUTPUT:
@@ -22,6 +23,7 @@ function varargout=mselect(input,surfaces)
 % Last modified by fge@princeton.edu on 6/28/19
 
 defval('surfaces',1);
+defval('k',4);
 
 % ship data
 date_time = [{'05-Aug-2019 08:00:00'},{'06-Aug-2019 18:00:00'},{'07-Aug-2019 08:00:00'},...
@@ -125,22 +127,25 @@ switch input
             newcoords(i)=distance(coords(i,1),coords(i,2),slat(closeindex(i)),slon(closeindex(i)));
         end
         newcoords(newcoords==0)=inf;
-        % number of floats to select
-        k=4;
         [value,i]=mink(newcoords,k);
-        mermaid=strcat('P0',sprintf('%02d',i));
+        mermaid=strings(1,k);
+        count=1;
+        for j=i
+            mermaid(count)=strcat('P0',sprintf('%02d',j));
+            count=count+1;
+        end
         loc=coords(i,:);
         time=times(i)/seconds;
 
         % plot
         shipplt;
         hold on
-        p=geoshow(loc(1),loc(2),'DisplayType','Point','Marker','o',...
+        p=geoshow(loc(:,1),loc(:,2),'DisplayType','Point','Marker','o',...
                 'MarkerFaceColor','b','MarkerEdgeColor','b','Markersize',10,...
                 'DisplayName','Closest Time Correspondence');
         legend(p,'Closest Time Correspondence','Location','NorthWest');
-        textm(loc(1),loc(2),datestr(datenum(launch)+time,'mm-dd-yy'));
-        textm(loc(1)+1,loc(2),mermaid);
+        textm(loc(:,1),loc(:,2),datestr(datenum(launch)+time,'mm-dd-yy'));
+        textm(loc(:,1)+1,loc(:,2),mermaid);
 end
     
 % Optional output
