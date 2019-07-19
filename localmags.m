@@ -1,5 +1,5 @@
 function varargout=localmags(minmag)
-% []=(minmag)
+% files=(minmag)
 %
 % This function returns nearest records of earthquakes above a certain
 % threshold
@@ -28,6 +28,7 @@ zfilenames=strcat('/data2/seismometer/',monthstr,char(num2str(day(times))),'/',z
 localxmax=zeros(1,n);
 localymax=zeros(1,n);
 localzmax=zeros(1,n);
+index=zeros(1,n);
 
 for i=1:n
     Seisx=readsac(xfilenames(i,:));
@@ -38,14 +39,14 @@ for i=1:n
     localzmax(i)=max(Seisz);
 end
 
-figure
+f=figure;
 stem3(mags,dists,localxmax);
+title('Magnitude-Distance Plot')
 xlabel('Magnitude')
 ylabel('Distances from Guyot (degrees)')
-zlabel('Measured Local Mags')
-
+zlabel('Local Measure')
 
 % Optional output
-varns={};
+varns={f};
 varargout=varns(1:nargout);
 
