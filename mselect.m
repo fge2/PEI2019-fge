@@ -125,7 +125,9 @@ switch input
             newcoords(i)=distance(coords(i,1),coords(i,2),slat(closeindex(i)),slon(closeindex(i)));
         end
         newcoords(newcoords==0)=inf;
-        [value,i]=min(newcoords);
+        % number of floats to select
+        k=4;
+        [value,i]=mink(newcoords,k);
         mermaid=strcat('P0',sprintf('%02d',i));
         loc=coords(i,:);
         time=times(i)/seconds;

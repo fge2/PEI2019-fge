@@ -28,15 +28,17 @@ zfilenames=strcat('/data2/seismometer/',monthstr,char(num2str(day(times))),'/',z
 localxmax=zeros(1,n);
 localymax=zeros(1,n);
 localzmax=zeros(1,n);
-index=zeros(1,n);
 
 for i=1:n
-    Seisx=readsac(xfilenames(i,:));
-    localxmax(i)=max(Seisx);
-    Seisy=readsac(yfilenames(i,:));
-    localymax(i)=max(Seisy);
-    Seisz=readsac(zfilenames(i,:));
-    localzmax(i)=max(Seisz);
+    try
+        Seisx=readsac(xfilenames(i,:));
+        localxmax(i)=max(Seisx);
+        Seisy=readsac(yfilenames(i,:));
+        localymax(i)=max(Seisy);
+        Seisz=readsac(zfilenames(i,:));
+        localzmax(i)=max(Seisz);
+    catch
+    end
 end
 
 f=figure;
