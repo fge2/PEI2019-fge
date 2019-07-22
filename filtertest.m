@@ -67,6 +67,6 @@ if plotornot
 end
 
 % Optional output
-varns={xfilt,HdrData,f};
+varns={xfilt,HdrData};
 varargout=varns(1:nargout);
 

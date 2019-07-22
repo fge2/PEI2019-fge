@@ -1,4 +1,4 @@
-function varargout=filterdata(start,endtime,minmag)
+function varargout=filterdata(start,endtime,minmag,order,Wn,type)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -11,17 +11,20 @@ n=length(xfiles);
 xfilenames=strcat('/data2/seismometer/',monthstr,char(num2str(day(times))),'/',xfiles);
 yfilenames=strcat('/data2/seismometer/',monthstr,char(num2str(day(times))),'/',yfiles);
 zfilenames=strcat('/data2/seismometer/',monthstr,char(num2str(day(times))),'/',zfiles);
+xfilts=cell(1,n);
+yfilts=cell(1,n);
+zfilts=cell(1,n);
 for i=1:n
     try
-        [Seisx{i},Hdrx{i}]=filtertest(xfilenames(i,:));
-        [Seisy{i},Hdry{i}]=filtertest(yfilenames(i,:));
-        [Seisz{i},Hdrz{i}]=filtertest(zfilenames(i,:));
+        [xfilts{i},Hdrx{i}]=filtertest(xfilenames(i,:),order,Wn,type);
+        [yfilts{i},Hdry{i}]=filtertest(yfilenames(i,:),order,Wn,type);
+        [zfilts{i},Hdrz{i}]=filtertest(zfilenames(i,:),order,Wn,type);
     catch
     end
 end
-xfilts=
+
 
 % Optional output
-varns={};
+varns={xfilts,yfilts,zfilts};
 varargout=varns(1:nargout);
 
