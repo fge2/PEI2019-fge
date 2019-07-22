@@ -1,4 +1,4 @@
-function varargout=filtertest(filename,order,Wn,type)
+function varargout=filtertest(filename,order,Wn,type,plotornot)
 % [xfilt,f]=filtertest(filename,order,Wn)
 %
 % This function plots the SeisData and a given bandpass filter using butter
@@ -10,9 +10,12 @@ function varargout=filtertest(filename,order,Wn,type)
 % order         The order of the butter filter
 % Wn            The cutoff frequencies of the filter
 % type          Low,High,etc
+% plotornot
 %
 % OUTPUT:
 %
+% xfilt         Filtered data vector
+% HdrData       Headerdata
 % f             The figure handle to the plot
 %
 % last modified by fge@princeton.edu on 7/9/2019
@@ -28,15 +31,16 @@ n=length(smag);
 xfilt=filter(B,A,S);
 xfilt=flip(filter(B,A,flip(xfilt)));
 
-f=figure;
-subplot(211)
-plotsac(S,HdrData);
-subplot(212)
-plotsac(xfilt,HdrData);
-max(xfilt)
 %plotornot
-plot=0;
-if plot
+defval('plotornot',0);
+if plotornot
+    f=figure;
+    subplot(211)
+    plotsac(S,HdrData);
+    subplot(212)
+    plotsac(xfilt,HdrData);
+    max(xfilt)
+
     figure
     subplot(211)
     plot(0:2/n:1-2/n,smag(1:floor(n/2)));
@@ -63,6 +67,6 @@ if plot
 end
 
 % Optional output
-varns={xfilt,f};
+varns={xfilt,HdrData,f};
 varargout=varns(1:nargout);
 

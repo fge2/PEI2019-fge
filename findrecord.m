@@ -1,5 +1,5 @@
-function varargout=findrecord(minmag)
-% [xfiles,yfiles,zfiles,times,pID]=findrecord(minmag)
+function varargout=findrecord(start,endtime,minmag)
+% [xfiles,yfiles,zfiles,times,pID]=findrecord(start,endtime,minmag)
 %
 % This function returns nearest records of earthquakes above a certain
 % threshold
@@ -8,7 +8,7 @@ function varargout=findrecord(minmag)
 %
 % minmag         minimum threshold to return
 % start          start time 'YYYY-MM-DD HH:MM:SS'
-% end            end time
+% endtime        end time
 %
 % OUTPUT:
 %
@@ -21,7 +21,11 @@ function varargout=findrecord(minmag)
 %
 % Last modified by fge@princeton.edu on 7/16/19
 
-ev = irisFetch.Events('starttime','2019-07-01','endtime','2019-07-08','minimummagnitude',minmag);
+defval('start','2019-07-01');
+defval('endtime','2019-07-08');
+defval('minmag',5);
+
+ev = irisFetch.Events('starttime',start,'endtime',endtime,'minimummagnitude',minmag);
 pID=extractfield(ev,'PublicId');
 times=extractfield(ev,'PreferredTime');
 times=datetime(datevec(times));

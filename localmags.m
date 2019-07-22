@@ -1,5 +1,5 @@
-function varargout=localmags(minmag)
-% files=(minmag)
+function varargout=localmags(start,endtime,minmag)
+% files=localmags(start,endtime,minmag)
 %
 % This function returns nearest records of earthquakes above a certain
 % threshold
@@ -8,7 +8,7 @@ function varargout=localmags(minmag)
 %
 % minmag         minimum threshold to return
 % start          start time 'YYYY-MM-DD HH:MM:SS'
-% end            end time
+% endtime        end time
 %
 % OUTPUT:
 %
@@ -16,8 +16,12 @@ function varargout=localmags(minmag)
 %
 % Last modified by fge@princeton.edu on 7/18/19
 
-mags=getmags(minmag);
-dists=getdist(minmag);
+defval('start','2019-07-01');
+defval('endtime','2019-07-08');
+defval('minmag',5);
+
+mags=getmags(start,endtime,minmag);
+dists=getdist(start,endtime,minmag);
 [xfiles,yfiles,zfiles,times]=findrecord(minmag);
 monthstr=char(month(times,'name'));
 n=length(xfiles);

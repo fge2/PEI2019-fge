@@ -1,5 +1,5 @@
-function varargout=getmags(minmag)
-% mags=getmags(minmag)
+function varargout=getmags(start,endtime,minmag)
+% mags=getmags(start,end,minmag)
 %
 % This function returns the magnitudes of all earthquakes above a threshold
 % given by irisFetch
@@ -8,7 +8,7 @@ function varargout=getmags(minmag)
 %
 % minmag         minimum threshold to return
 % start          start time 'YYYY-MM-DD HH:MM:SS'
-% end            end time
+% endtime        end time
 %
 % OUTPUT:
 %
@@ -16,8 +16,11 @@ function varargout=getmags(minmag)
 %
 % Last modified by fge@princeton.edu on 7/16/19
 
+defval('start','2019-07-01');
+defval('endtime','2019-07-08');
+defval('minmag',5);
 
-ev = irisFetch.Events('starttime','2019-07-01','endtime','2019-07-08','minimummagnitude',minmag);
+ev = irisFetch.Events('starttime',start,'endtime',endtime,'minimummagnitude',minmag);
 mags=[ev.PreferredMagnitudeValue];
 
 % Optional output
