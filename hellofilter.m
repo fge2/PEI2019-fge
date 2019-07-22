@@ -24,7 +24,7 @@ ah(2)=subplot(322);
 mag=abs(fft(x));
 stem(axis,mag(1:length(mag)/2).^2)
 title('Magnitude of Fourier Transform')
-xlabel('Frequency (pi rad/samples)')
+xlabel('Frequency (Hz)')
 ylabel('Magnitude')
 
 ah(3)=subplot(323);
@@ -32,13 +32,13 @@ ah(3)=subplot(323);
 [H,W]=freqz(B,A,n/2);
 plot(axis,abs(H),'r')
 title('Filter Gain Magnitude Response')
-xlabel('Frequency (pi rad/samples)')
+xlabel('Frequency (Hz)')
 ylabel('Magnitude')
 
 ah(4)=subplot(324);
 plot(axis,angle(H),'r')
 title('Filter Phase Response')
-xlabel('Frequency (pi rad/samples)')
+xlabel('Frequency (Hz)')
 ylabel('Phase')
 
 ah(5)=subplot(325);
@@ -60,6 +60,10 @@ hold on
 mag=abs(fft(xfilt2));
 stem(axis,mag(1:length(mag)/2).^2)
 hold off
+
+axes(ah(5))
+hold on
+plot(t,z);
 
 axes(ah(6))
 hold on

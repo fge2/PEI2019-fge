@@ -29,7 +29,7 @@ slat = [-17.3, -12.0, -10.0, -8.0, -6.0, -5.0, -6.0, -8.0, -13.0, -17.0, -22.0,.
 
 n=length(date_time);
 latlim=[(floor(2*min(slat)/2) - 5),ceil(2*max(slat))/2 + 10];
-lonlim=[(floor(2*min(slon))/2-5),(ceil(2*max(slon))/2+5)];
+lonlim=[(floor(2*min(slon))/2-5),(ceil(2*max(slon))/2+10)];
 
 % Plot coordinates
 f = figure;

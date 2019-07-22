@@ -33,7 +33,7 @@ subplot(211)
 plotsac(S,HdrData);
 subplot(212)
 plotsac(xfilt,HdrData);
-
+max(xfilt)
 %plotornot
 plot=0;
 if plot
