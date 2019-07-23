@@ -15,9 +15,12 @@ function varargout=filterdata(start,endtime,minmag,order,Wn,type)
 %
 % OUTPUT:
 %
-% xfilt         Filtered x data vector
-% yfilt         Filtered y data vector
-% zfilt         Filtered z data vector
+% xfilt         Filtered x data in a struct array
+% yfilt         Filtered y data in a struct array
+% zfilt         Filtered z data in a struct array
+% Hdrx          x Headerdata
+% Hdry          y Headerdata
+% Hdrz          z Headerdata
 %
 % last modified by fge@princeton.edu on 7/23/2019
 
@@ -44,6 +47,6 @@ end
 
 
 % Optional output
-varns={xfilts,yfilts,zfilts};
+varns={xfilts,yfilts,zfilts,Hdrx,Hdry,Hdrz};
 varargout=varns(1:nargout);
 

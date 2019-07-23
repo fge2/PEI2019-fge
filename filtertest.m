@@ -39,7 +39,7 @@ if plotornot
     plotsac(S,HdrData);
     subplot(212)
     plotsac(xfilt,HdrData);
-    max(xfilt)
+    max(xfilt);
 
     figure
     subplot(211)
