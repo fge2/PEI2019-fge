@@ -68,6 +68,7 @@ plot(t,z);
 axes(ah(6))
 hold on
 plot(t,z);
+
 % Cosmetics
 set(ah([2 3 4]),'xtick',[w1 w2 w3 w4])
 

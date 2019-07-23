@@ -1,6 +1,25 @@
 function varargout=filterdata(start,endtime,minmag,order,Wn,type)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% [xfilts,yfilts,zfilts]=filterdata(start,endtime,minmag,order,Wn,type)
+%
+% This function filters and returns the vectors for events specified by the
+% arguement drawn from iris
+%
+% INPUT:
+%
+% start         The start time
+% endtime       The end time
+% minmag        Cutoff magnitude
+% order         Order of filter
+% Wn            The cutoff frequencies of the filter
+% type          Low,High,etc
+%
+% OUTPUT:
+%
+% xfilt         Filtered x data vector
+% yfilt         Filtered y data vector
+% zfilt         Filtered z data vector
+%
+% last modified by fge@princeton.edu on 7/23/2019
 
 defval('start','2019-07-01');
 defval('endtime','2019-07-08');
