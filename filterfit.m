@@ -17,7 +17,6 @@ function varargout=filterfit(seisfilt,Hdr)
 
 time=(1:360000)';
 f=fit(time,seisfilt,'fourier8');
-figure
 plotsac(seisfilt,Hdr)
 hold on
 plot(f,time,seisfilt);

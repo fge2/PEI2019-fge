@@ -1,5 +1,5 @@
 function varargout=filterdata(start,endtime,minmag,order,Wn,type)
-% [xfilts,yfilts,zfilts]=filterdata(start,endtime,minmag,order,Wn,type)
+% [xfilts,yfilts,zfilts,Hdrx,Hdry,Hdrz]=filterdata(start,endtime,minmag,order,Wn,type)
 %
 % This function filters and returns the vectors for events specified by the
 % arguement drawn from iris

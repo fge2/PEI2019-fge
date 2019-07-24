@@ -21,7 +21,10 @@ function varargout=filtertest(filename,order,Wn,type,plotornot)
 % last modified by fge@princeton.edu on 7/9/2019
 
 defval('type','low');
+Fs=50;
 [SeisData,HdrData,tnu,pobj,tims]=readsac(filename,0,'l');
+
+Wn=Wn*(2/Fs);
 
 S=detrend(SeisData);
 smag=abs(fft(S));
