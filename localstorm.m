@@ -1,4 +1,4 @@
-function varargout=localstorm(lat,lon,isotime,index,k)
+function varargout=localstorm(lat,lon,isotime,index,k,name)
 % [start,value]=localstorm(lat,lon,index)
 
 % Guyot coords
@@ -19,8 +19,10 @@ for n=1:k
     load coastlines
     geoshow(coastlat,coastlon);
     geoshow(lat(index(i(n)):index(i(n)+1)-1),lon(index(i(n)):index(i(n)+1)-1),'Marker','.','Markersize',10,'LineStyle','none')
-    geoshow(Guyotlat,Guyotlon,'DisplayType','Point','Marker','o','MarkerFaceColor','red','Markersize',15);
-    textm(lat(index(i(n)):7:index(i(n)+1)-1),lon(index(i(n)):7:index(i(n)+1)-1)+0.05,datestr(isotime(index(i(n)):7:index(i(n)+1)-1),'mm/dd'));
+    g=geoshow(Guyotlat,Guyotlon,'DisplayType','Point','Marker','o','MarkerFaceColor','red','Markersize',10);
+    legend(g,'Guyot Location');
+    title(name(start(n)))
+    textm(lat(index(i(n)):7:index(i(n)+1)-1),lon(index(i(n)):7:index(i(n)+1)-1)+0.05,datestr(isotime(index(i(n)):7:index(i(n)+1)-1),'mm/dd/yyyy'));
 end
 % Optional output
 varns={start,date,value};
