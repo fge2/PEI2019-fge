@@ -1,5 +1,5 @@
 function varargout=filtertest(filename,order,Wn,type,plotornot)
-% [xfilt,f]=filtertest(filename,order,Wn)
+% [xfilt,f]=filtertest(filename,order,Wn,type,plotornot)
 %
 % This function plots the SeisData and a given bandpass filter using butter
 % and the filtered data
