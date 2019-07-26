@@ -52,7 +52,7 @@ switch input
     case 1
         f=fit(time(:),Ta(:),'fourier8')
         figure
-        plot(f,time,Ta)
+        plot(f,time,Ta,'-')
         title('Fourier Fit for Temperature');
         xlabel('time (days)');
         ylabel('Ta');
