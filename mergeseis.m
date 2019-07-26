@@ -9,12 +9,15 @@ for i=0:23
     finalseis=[finalseis; seis];
 end
 
-startdate=datetime(strcat(MM,'/',DD,'/',YYYY),'InputFormat','MM/dd/yyyy');
-t=seconds(0:(length(finalseis)-1))/100 + startdate;
-plot(t,detrend(finalseis));
-xlim([t(1) t(end)])
-title(strcat('Guyot Seismogram',{' '},MM,'/',DD,'/',YYYY))
-xlabel('Hour')
+plot=0;
+if plot
+    startdate=datetime(strcat(MM,'/',DD,'/',YYYY),'InputFormat','MM/dd/yyyy');
+    t=seconds(0:(length(finalseis)-1))/100 + startdate;
+    plot(t,detrend(finalseis));
+    xlim([t(1) t(end)])
+    title(strcat('Guyot Seismogram',{' '},MM,'/',DD,'/',YYYY))
+    xlabel('Hour')
+end 
 
 % Optional output
 varns={finalseis};
