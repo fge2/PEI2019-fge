@@ -1,12 +1,22 @@
 function varargout=mergeseis(YYYY,MM,DD,indexno)
 %
 
-finalseis=zeros();
+finalseis=zeros(360000*24,1);
 %prefix=strcat('/home/fge/seismometer/',YYYY,'/',MM,'/',DD,'/');
-prefix=strcat('/home/fge/seismometer/allseis/');
+prefix=strcat('/home/fge/seismometer/all',YYYY,'/');
 for i=0:23
-    seis=readsac(strcat(prefix,'PP.S0001.00.HHX.D.',YYYY,'.',num2str(indexno),'.',sprintf('%02d',i),'0000.SAC'));
-    finalseis=[finalseis; seis];
+    filename=strcat(prefix,'PP.S0001.00.HHX.D.',YYYY,'.',num2str(indexno),'.',sprintf('%02d',i),'0000.SAC');
+    if exist(filename,'file')==0
+        seis=NaN(360000,1);
+    else
+        seis=readsac(filename);
+    end
+    if length(seis)~=360000
+        temp=seis;
+        seis=NaN(360000,1);
+        seis(1:length(temp))=temp;
+    end
+    finalseis(i*360000+1:(i+1)*360000)=seis;
 end
 
 plot=0;
