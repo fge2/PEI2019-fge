@@ -1,11 +1,11 @@
-function varargout=mergeseis(YYYY,MM,DD)
+function varargout=mergeseis(YYYY,MM,DD,indexno)
 %
 
 finalseis=zeros();
-prefix=strcat('/home/fge/seismometer/',YYYY,'/',MM,'/',DD,'/');
-daynum=str2double(DD);
+%prefix=strcat('/home/fge/seismometer/',YYYY,'/',MM,'/',DD,'/');
+prefix=strcat('/home/fge/seismometer/allseis/');
 for i=0:23
-    seis=readsac(strcat(prefix,'PP.S0001.00.HHX.D.',YYYY,'.',num2str(181+daynum),'.',sprintf('%02d',i),'0000.SAC'));
+    seis=readsac(strcat(prefix,'PP.S0001.00.HHX.D.',YYYY,'.',num2str(indexno),'.',sprintf('%02d',i),'0000.SAC'));
     finalseis=[finalseis; seis];
 end
 

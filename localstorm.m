@@ -1,12 +1,20 @@
 function varargout=localstorm(lat,lon,isotime,index,k,name)
-% [start,value]=localstorm(lat,lon,index)
+% [start,date,value]=localstorm(lat,lon,isotime,index,k,name)
+%
+% This function returns the closest hurricanse to the local Guyot station
 
 % Guyot coords
 Guyotlat=40.35;
 Guyotlon=-74.65;
 
-dists=distance(lat(index),lon(index),Guyotlat,Guyotlon);
-[value,i]=mink(dists,k);
+mindists=zeros();
+for i=1:(length(index)-1)
+    j=index(i):index(i+1);
+    dists=distance(lat(j),lon(j),Guyotlat,Guyotlon);
+    mindists(i)=min(dists);
+end
+
+[value,i]=mink(mindists,k);
 start=index(i);
 date=isotime(start);
 for n=1:k
@@ -22,7 +30,7 @@ for n=1:k
     g=geoshow(Guyotlat,Guyotlon,'DisplayType','Point','Marker','o','MarkerFaceColor','red','Markersize',10);
     legend(g,'Guyot Location');
     title(name(start(n)))
-    textm(lat(index(i(n)):7:index(i(n)+1)-1),lon(index(i(n)):7:index(i(n)+1)-1)+0.05,datestr(isotime(index(i(n)):7:index(i(n)+1)-1),'mm/dd/yyyy'));
+    textm(lat(index(i(n)):14:index(i(n)+1)-1),lon(index(i(n)):14:index(i(n)+1)-1)+0.05,datestr(isotime(index(i(n)):14:index(i(n)+1)-1),'mm/dd/yyyy'));
 end
 % Optional output
 varns={start,date,value};

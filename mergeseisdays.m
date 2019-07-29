@@ -1,4 +1,4 @@
-function varargout=mergeseisdays(year,startmonth,startday,days)
+function varargout=mergeseisdays(year,startmonth,startday,indexno,days)
 %UNTITLED4 Summary of this function goes here
 
 startdate=datetime(strcat(startmonth,'/',startday,'/',year),'InputFormat','MM/dd/yyyy');
@@ -7,7 +7,7 @@ doubleday=str2double(startday);
 doublemonth=str2double(startmonth);
 doubleyear=str2double(year);
 for i=1:days-1
-    seis=mergeseis(year,startmonth,startday);
+    seis=mergeseis(year,startmonth,startday,indexno);
     merge=[merge; seis];
     if str2double(startday)<eomday(doubleyear,doublemonth)
         startday=sprintf('%02d',doubleday+1);
@@ -15,6 +15,7 @@ for i=1:days-1
         startday='01';
         startmonth=sprintf('%02d',doublemonth+1);
     end
+    indexno=indexno+1;
 end
 
 figure
