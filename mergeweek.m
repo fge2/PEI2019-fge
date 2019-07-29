@@ -1,5 +1,5 @@
 function varargout=mergeweek(year,start,weeks)
-% []=mergeweek(start,weeks)
+% [totaltime,totalTa]=mergeweek(year,start,weeks)
 %
 % This function merges weeks of weather data together
 
