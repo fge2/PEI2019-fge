@@ -2,6 +2,23 @@ function varargout=localstorm(lat,lon,isotime,index,k,name)
 % [start,date,value]=localstorm(lat,lon,isotime,index,k,name)
 %
 % This function returns the closest hurricanse to the local Guyot station
+%
+% INPUT:
+% 
+% lat                 lat vector
+% lon                 lon vector
+% isotime             time vector
+% index               index vector
+% k                   number of results wanted
+% name                name vector
+%
+% OUTPUT:
+%
+% start               indices of closest hurricanes
+% date                dates of selected hurricanes
+% value               distance away of selected hurricanes
+%
+% last modified by fge@princeton.edu on 7/30/19
 
 % Guyot coords
 Guyotlat=40.35;

@@ -1,5 +1,25 @@
 function varargout=readibtracs(table)
 % [name,index,isotime,lat,lon,wind,pres,speed,dir]=readibtracs(table)
+%
+% This function reads in ibtracs tables after formatting
+%
+% INPUT:
+% 
+% table               ibtracs table in matlab
+%
+% OUTPUT:
+%
+% name                name of hurricanes
+% index               indices of data
+% lat                 lat vector
+% lon                 lon vector
+% isotime             time vector
+% wind                wind speed vector
+% pres                pressure vector
+% speed               hurricane speed vector
+% dir                 direction vector
+%
+% last modified by fge@princeton.edu on 7/30/19
 
 load(table);
 name=ibtracs.NAME(2:end);

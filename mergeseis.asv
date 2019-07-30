@@ -19,7 +19,8 @@ function varargout=mergeseis(YYYY,MM,DD,indexno)
 sampleperfile=360000;
 downsamplerate=25;
 finalseis=zeros(sampleperfile*24,1);
-prefix=strcat('/home/fge/seismometer/all',YYYY,'/');
+prefix=strcat('/home/fge/seismometer/',YYYY,'/all2018/');
+%prefix=strcat('/home/fge/seismometer/all',YYYY,'/');
 for i=0:23
     filename=strcat(prefix,'PP.S0001.00.HHX.D.',YYYY,'.',num2str(indexno),'.',sprintf('%02d',i),'0000.SAC');
     if exist(filename,'file')==0
@@ -32,7 +33,8 @@ for i=0:23
         seis=NaN(sampleperfile,1);
         seis(1:length(temp))=temp;
     end
-    seis=decimate(seis,downsamplerate);
+            seis=decimate(seis,25);
+
     finalseis(i*sampleperfile+1:(i+1)*sampleperfile)=seis;
 end
 
