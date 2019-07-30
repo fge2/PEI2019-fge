@@ -1,5 +1,5 @@
-function varargout=filtertest(filename,order,Wn,type,plotornot)
-% [xfilt,f]=filtertest(filename,order,Wn,type,plotornot)
+function varargout=filtertest(filename,SeisData,order,Wn,type,plotornot)
+% [xfilt,f]=filtertest(filename,SeisData,order,Wn,type,plotornot)
 %
 % This function plots the SeisData and a given bandpass filter using butter
 % and the filtered data
@@ -7,6 +7,7 @@ function varargout=filtertest(filename,order,Wn,type,plotornot)
 % INPUT:
 %
 % filename      The filename including path
+% Seisdata      The data vector if we are giving it the vector directly
 % order         The order of the butter filter
 % Wn            The cutoff frequencies of the filter
 % type          Low,High,etc
@@ -22,10 +23,13 @@ function varargout=filtertest(filename,order,Wn,type,plotornot)
 
 defval('type','low');
 Fs=50;
-[SeisData,HdrData,tnu,pobj,tims]=readsac(filename,0,'l');
+
+if filename~=[]
+    [SeisData,HdrData,tnu,pobj,tims]=readsac(filename,0,'l');
+end
+HdrData=[];
 
 Wn=Wn*(2/Fs);
-
 S=detrend(SeisData);
 smag=abs(fft(S));
 sangle=angle(fft(S));

@@ -37,11 +37,6 @@ legend('Temperature','24 Hour Average','location','best')
 ylabel('Temperature (deg C)')
 xlabel('Date')
 title('Temperaure Measured by Guyot Weather Station')
-avg24 = filter(coeff24hMA, 1, record);
-plot(days,[avg24])
-ylabel('')
-xlabel('')
-title('')
 
 % Optional output
 varns={avg24};

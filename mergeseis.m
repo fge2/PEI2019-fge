@@ -24,13 +24,15 @@ prefix=strcat('/home/fge/seismometer/all',YYYY,'/');
 for i=0:23
     filename=strcat(prefix,'PP.S0001.00.HHX.D.',YYYY,'.',num2str(indexno),'.',sprintf('%02d',i),'0000.SAC');
     if exist(filename,'file')==0
-        seis=NaN(sampleperfile,1);
+        % nan or zeros
+        seis=zeros(sampleperfile,1);
     else
         seis=readsac(filename);
     end
     if length(seis)~=sampleperfile
         temp=seis;
-        seis=NaN(sampleperfile,1);
+        % nan or zeros
+        seis=zeros(sampleperfile,1);
         seis(1:length(temp))=temp;
     end
     seis=decimate(seis,downsamplerate);
