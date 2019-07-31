@@ -3,12 +3,14 @@ function varargout=mergeweek(year,start,weeks)
 %
 % This function merges weeks of weather data together
 
-totaltime=zeros();
-totalTa=zeros();
+totaltime=[];
+totalTa=[];
+totalPa=[];
 for i=1:weeks
 [time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=readweek(year,start+((i-1)*7));
 totaltime=[totaltime; time];
 totalTa=[totalTa; Ta];
+totalPa=[totalPa; Pa];
 end
 
 z=find(totaltime==0);
@@ -22,7 +24,7 @@ end
 totaltime=totaltime-totaltime(1);
 
 % Optional output
-varns={totaltime,totalTa};
+varns={totaltime,totalTa,totalPa};
 varargout=varns(1:nargout);
 
 

@@ -1,4 +1,4 @@
-function varargout=averagefilt(record,doy)
+function varargout=averagefilt(record,record2,doy)
 % avg24=averagefilt(record)
 %
 % This function applys a 1 hour moving average to a vector
@@ -42,6 +42,8 @@ ylabel('Temperature (deg C)')
 xlabel('Date')
 title('Temperaure Measured by Guyot Weather Station')
 xlim([time(1)+1 time(end)-1])
+figure
+plot(time,record2)
 
 % Optional output
 varns={avg24};
