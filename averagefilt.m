@@ -1,4 +1,4 @@
-function varargout=averagefilt(record)
+function varargout=averagefilt(record,doy)
 % avg24=averagefilt(record)
 %
 % This function applys a 1 hour moving average to a vector
@@ -6,6 +6,7 @@ function varargout=averagefilt(record)
 % INPUT:
 % 
 % record            data to be filtered
+% doy               day of year
 %
 % OUTPUT:
 %
@@ -13,6 +14,7 @@ function varargout=averagefilt(record)
 %
 % last modified by fge@princeton.edu on 7/30/19
 
+Dt=datetime('1-Jan-2018')+doy-1;
 hoursPerDay = 24;
 type='temp';
 switch type
@@ -20,8 +22,12 @@ switch type
         samplesperfile=360000;
         desamplerate=25;
         samplesperhour=samplesperfile/desamplerate;
+        t=(0:length(record)-1)/(100/desamplerate);
+        time=seconds(t)+Dt;
     case 'temp'
         samplesperhour=60;
+        t=(0:length(record)-1);
+        time=minutes(t)+Dt;
 end
 coeff24hMA = ones(1, hoursPerDay*samplesperhour)/(hoursPerDay*samplesperhour);
 
@@ -29,8 +35,6 @@ coeff24hMA = ones(1, hoursPerDay*samplesperhour)/(hoursPerDay*samplesperhour);
 temp = filter(coeff24hMA, 1, record);
 avg24 = flip(filter(coeff24hMA, 1, flip(temp)));
 
-Dt=datetime('1-Jan-2018')+start-1;
-time=seconds(t)+Dt;
 figure
 plot(time,[record avg24])
 legend('Temperature','24 Hour Average','location','best')

@@ -33,9 +33,10 @@ figure
 t=(0:(days*sampleperfile*downsamplerate*hoursperday)-1)/100;
 t=decimate(t,downsamplerate);
 t=seconds(t)+startdate;
-Wn=[0.02 0.06];
+Wn=[0.03 0.06];
 filt=filtertest([],merge,2,Wn,'bandpass',0);
-plot(t,filt);
+plot(t,filt)
+%plot(t,merge);
 xlim([t(1) t(end)])
 title(strcat('Guyot Seismogram'))
 
