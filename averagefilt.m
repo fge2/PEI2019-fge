@@ -41,6 +41,7 @@ legend('Temperature','24 Hour Average','location','best')
 ylabel('Temperature (deg C)')
 xlabel('Date')
 title('Temperaure Measured by Guyot Weather Station')
+xlim([time(1)+1 time(end)-1])
 
 % Optional output
 varns={avg24};
