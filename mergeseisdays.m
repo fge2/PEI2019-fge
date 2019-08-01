@@ -1,5 +1,5 @@
 function varargout=mergeseisdays(year,startmonth,startday,indexno,days)
-% merge=mergeseisdays(year,startmonth,startday,indexno,days)
+% [merge,filt,time]=mergeseisdays(year,startmonth,startday,indexno,days)
 %
 % This function merges days of seismic data together
 %
@@ -41,7 +41,7 @@ xlim([t(1) t(end)])
 title(strcat('Guyot Seismogram'))
 
 % Optional output
-varns={merge,filt};
+varns={merge,filt,t};
 varargout=varns(1:nargout);
     
 

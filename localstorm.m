@@ -47,7 +47,7 @@ for n=1:k
     g=geoshow(Guyotlat,Guyotlon,'DisplayType','Point','Marker','o','MarkerFaceColor','red','Markersize',10);
     legend(g,'Guyot Location');
     title(name(start(n)))
-    textm(lat(index(i(n)):14:index(i(n)+1)-1),lon(index(i(n)):14:index(i(n)+1)-1)+0.05,datestr(isotime(index(i(n)):14:index(i(n)+1)-1),'mm/dd/yyyy'));
+    textm(lat(index(i(n)):21:index(i(n)+1)-1),lon(index(i(n)):21:index(i(n)+1)-1)+0.05,datestr(isotime(index(i(n)):21:index(i(n)+1)-1),'mm/dd/yyyy'));
 end
 % Optional output
 varns={start,date,value};
