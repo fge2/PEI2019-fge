@@ -1,4 +1,4 @@
-function varargout=mergeseis(YYYY,MM,DD,indexno)
+function varargout=mergeseis(YYYY,MM,DD,indexno,XYZ)
 % finalseis=mergeseis(YYYY,MM,DD,indexno)
 %
 % This function merges a day of seismic data together
@@ -9,6 +9,7 @@ function varargout=mergeseis(YYYY,MM,DD,indexno)
 % MM          month string
 % DD          day string
 % indexno     day of year
+% XYZ         which component
 %
 % OUTPUT:
 % 
@@ -22,7 +23,7 @@ sample=sampleperfile/downsamplerate;
 finalseis=zeros(sample*24,1);
 prefix=strcat('/home/fge/seismometer/all',YYYY,'/');
 for i=0:23
-    filename=strcat(prefix,'PP.S0001.00.HHX.D.',YYYY,'.',num2str(indexno),'.',sprintf('%02d',i),'0000.SAC');
+    filename=strcat(prefix,'PP.S0001.00.HH',XYZ,'.D.',YYYY,'.',num2str(indexno),'.',sprintf('%02d',i),'0000.SAC');
     if exist(filename,'file')==0
         % nan or zeros
         seis=zeros(sampleperfile,1);
