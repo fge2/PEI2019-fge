@@ -9,15 +9,18 @@ f=figure;
 
 subplot(311)
 plot(t1,f1)
-axis tight
+title('X component')
+xlim([t1(1) t1(end)])
 
 subplot(312)
 plot(t2,f2)
-axis tight
+title('Y component')
+xlim([t2(1) t2(end)])
 
 subplot(313)
 plot(t3,f3)
-axis tight
+title('Z component')
+xlim([t1(1) t1(end)])
 
 % Optional output
 varns={f};
