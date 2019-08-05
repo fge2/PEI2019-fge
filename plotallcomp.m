@@ -7,18 +7,20 @@ function varargout=plotallcomp(year,startmonth,startday,indexno,days)
 
 f=figure;
 
+sgtitle(strcat('Seismogram record of Guyot Hall beginning on',{' '},startmonth,'/',startday,'/',year));
+
 subplot(311)
-plot(t1,f1)
+plot(t1,m1)
 title('X component')
 xlim([t1(1) t1(end)])
 
 subplot(312)
-plot(t2,f2)
+plot(t2,m2)
 title('Y component')
-xlim([t2(1) t2(end)])
+xlim([t1(1) t1(end)])
 
 subplot(313)
-plot(t3,f3)
+plot(t3,m3)
 title('Z component')
 xlim([t1(1) t1(end)])
 
