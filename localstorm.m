@@ -48,17 +48,17 @@ for n=1:k
     cmap=colormap(gca,parula(max(wind)-min(wind)));
     c=colorbar();
     caxis([min(wind) max(wind)]);
-    c.Position=[c.Position(1)+0.1 c.Position(2) c.Position(3)/3 c.Position(4)];
+    c.Position=[c.Position(1)+0.1 c.Position(2) c.Position(3)/3 c.Position(4)/1.1];
     set(get(c,'Title'),'String','Windspeed (km/h)');
     
     w=wind(index(i(n)):index(i(n)+1)-1);
     nans=find(isnan(w));
     w(nans)=w(nans-1);
     scatterm(lat(index(i(n)):index(i(n)+1)-1),lon(index(i(n)):index(i(n)+1)-1),10,cmap(w,:),'filled');
-    g=geoshow(Guyotlat,Guyotlon,'DisplayType','Point','Marker','o','MarkerFaceColor','red','Markersize',10);
+    g=geoshow(Guyotlat,Guyotlon,'DisplayType','Point','Marker','+','MarkerFaceColor','red','Markersize',8);
     legend(g,'Guyot Location');
-    title(name(start(n)))
-    textm(lat(index(i(n)):21:index(i(n)+1)-1),lon(index(i(n)):21:index(i(n)+1)-1)+0.05,datestr(isotime(index(i(n)):21:index(i(n)+1)-1),'mm/dd/yyyy'));
+    title(strcat('Track of Hurricane',{' '},name(start(n)),' Recorded by ibtracs Datasets'));
+    textm(lat(index(i(n)):21:index(i(n)+1)-1),lon(index(i(n)):21:index(i(n)+1)-1)+0.05,datestr(isotime(index(i(n)):21:index(i(n)+1)-1),'mm/dd/yyyy'),'Rotation',30);
 end
 % Optional output
 varns={start,date,value};
