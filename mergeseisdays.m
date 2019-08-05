@@ -32,6 +32,11 @@ for i=0:days-1
     merge(i*n+1:(i+1)*n)=seis;
     indexno=indexno+1;
 end
+merge=detrend(merge);
+i=find(abs(merge)>3000);
+for index=1:length(i)
+    merge(i(index)-10000:i(index)+10000)=0;
+end
 f=figure;
 t=(0:(days*sampleperfile*downsamplerate*hoursperday)-1)/100;
 t=decimate(t,downsamplerate);
