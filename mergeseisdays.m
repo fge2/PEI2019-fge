@@ -33,20 +33,21 @@ for i=0:days-1
     indexno=indexno+1;
 end
 merge=detrend(merge);
-i=find(abs(merge)>3000);
+i=find(abs(merge)>2000);
 for index=1:length(i)
     merge(i(index)-10000:i(index)+10000)=0;
 end
-f=figure;
+%f=figure;
+f=[];
 t=(0:(days*sampleperfile*downsamplerate*hoursperday)-1)/100;
 t=decimate(t,downsamplerate);
 t=seconds(t)+startdate;
 Wn=[0.1 0.25];
 filt=filtertest([],merge,2,Wn,'bandpass',0);
-plot(t,filt)
+%plot(t,filt)
 %plot(t,merge);
-xlim([t(1) t(end)])
-title(strcat('Guyot Seismogram'))
+%xlim([t(1) t(end)])
+%title(strcat('Guyot Seismogram'))
 
 % Optional output
 varns={merge,filt,t,f};
