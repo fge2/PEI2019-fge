@@ -53,14 +53,14 @@ b.YLim=lim;
 %c.YLim=lim;
 
 Superset = datenum(t1);
-Subset = [datenum(2018, 9, 13); datenum(2018, 9, 14)];
+Subset = [datenum(2018, 9, 13); datenum(2018, 9, 15)];
 Indices = datefind(Subset, Superset, 0.05);
 xerror1 = (yupper1(Indices)-r1(Indices))./r1(Indices);
-xerror2 = (ylower1(Indices)-r2(Indices))./r2(Indices);
+xerror2 = (r2(Indices)-ylower1(Indices))./r2(Indices);
 xcomperr = [nanmean(xerror1) nanmean(xerror2)];
 
 Superset2 = datenum(t2);
-Subset2 = [datenum(2018, 9, 13); datenum(2018, 9, 14)];
+Subset2 = [datenum(2018, 9, 13); datenum(2018, 9, 15)];
 Indices2 = datefind(Subset2, Superset2, 0.05);
 yerror1 = (yupper2(Indices2)-r3(Indices2))./r3(Indices2);
 yerror2 = (ylower2(Indices2)-r4(Indices2))./r4(Indices2);
