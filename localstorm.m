@@ -59,6 +59,7 @@ for n=1:k
     legend(g,'Guyot Location');
     title(strcat('Track of Hurricane',{' '},name(start(n)),' Recorded by ibtracs Datasets'));
     textm(lat(index(i(n)):21:index(i(n)+1)-1),lon(index(i(n)):21:index(i(n)+1)-1)+0.05,datestr(isotime(index(i(n)):21:index(i(n)+1)-1),'mm/dd/yyyy'),'Rotation',30);
+    scatterm(lat(index(i(n)):21:index(i(n)+1)-1),lon(index(i(n)):21:index(i(n)+1)-1),10,'k','filled');
 end
 % Optional output
 varns={start,date,value};

@@ -3,20 +3,20 @@ function varargout=plotallcomp(year,startmonth,startday,indexno,days)
 
 [m1,f1,t1]=mergeseisdays(year,startmonth,startday,indexno,days,'X');
 [m2,f2,t2]=mergeseisdays(year,startmonth,startday,indexno,days,'Y');
-[m3,f3,t3]=mergeseisdays(year,startmonth,startday,indexno,days,'Z');
+%[m3,f3,t3]=mergeseisdays(year,startmonth,startday,indexno,days,'Z');
 t1(m1==0)=[];
 m1(m1==0)=[];
 t2(m2==0)=[];
 m2(m2==0)=[];
-t3(m3==0)=[];
-m3(m3==0)=[];
+%t3(m3==0)=[];
+%m3(m3==0)=[];
 n=length(m1);
 [r1,r2]=envelope(m1,n,'rms');
 [r3,r4]=envelope(m2,n,'rms');
-[r5,r6]=envelope(m1,n,'rms');
+%[r5,r6]=envelope(m3,n,'rms');
 [yupper1,ylower1]=envelope(m1,14400,'rms');
 [yupper2,ylower2]=envelope(m2,14400,'rms');
-[yupper3,ylower3]=envelope(m3,14400,'rms');
+%[yupper3,ylower3]=envelope(m3,14400,'rms');
 
 f=figure;
 tx=suptitle(strcat('Clipped Seismogram record of Guyot Hall beginning on',{' '},startmonth,'/',startday,'/',year));

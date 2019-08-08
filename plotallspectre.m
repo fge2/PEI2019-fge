@@ -1,18 +1,39 @@
-function varargout=plotallspectre(year,startmonth,startday,indexno,days)
+function varargout=plotallspectre(year,startmonth,startday,indexno,nodays,hurricanename)
 %
 
 startdate=datetime(strcat(startmonth,'/',startday,'/',year),'InputFormat','MM/dd/yyyy');
 
-[m1,f1,t1]=mergeseisdays(year,startmonth,startday,indexno,days,'X');
-length(m1)
+[m1,f1,t1]=mergeseisdays(year,startmonth,startday,indexno,nodays,'X');
+length(m1);
 t1(m1==0)=[];
 m1(m1==0)=NaN;
 
 f=figure;
-spectrogram(m1,256,[],[],4,'yaxis');
-f.Children(1).Axes.XLim=[0 days];
+Fs=4;
+spectrogram(fillmissing(m1,'pchip'),1024,[],[],Fs,'yaxis');
+colormap parula
+caxis([0 60])
+ylim([0.1 0.4])
+f.Children(1).Axes.XLim=[0 nodays];
 xlabel(strcat('Days After',{' '},datestr(startdate)));
-title(strcat('Spectrogram of Guyot Seismographs during',{' '},datestr(startdate)));
+var=0:2:nodays;
+xdates=startdate+var;
+xticklabels(cellstr(datestr(xdates,'mm/dd')));
+xtickangle(90);
+title({['Spectrogram of Guyot Seismographs Plotted']; ['with ibtracs Wind Data During ',datestr(startdate)]});
+
+yyaxis right
+ylabel('Wind Speed (km/h)')
+hold on
+set(gca,'ycolor','k') 
+[name,~,isotime,~,~,wind]=readibtracs('myibtracs.mat');
+i=find(name==hurricanename);
+h=isotime(i)-startdate;
+d=days(h);
+p=plot(d,fillmissing(wind(i),'previous'),'r','LineWidth',2);
+legend(p,'Wind Speed');
+
+
 
 % Optional output
 varns={f};

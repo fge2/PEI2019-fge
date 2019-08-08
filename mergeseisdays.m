@@ -42,7 +42,7 @@ f=[];
 t=(0:(days*sampleperfile*downsamplerate*hoursperday)-1)/100;
 t=decimate(t,downsamplerate);
 t=seconds(t)+startdate;
-Wn=[0.1 0.25];
+Wn=[0.1 0.4];
 filt=filtertest([],merge,2,Wn,'bandpass',0);
 %plot(t,filt)
 %plot(t,merge);

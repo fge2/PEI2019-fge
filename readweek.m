@@ -1,5 +1,5 @@
 function varargout=readweek(year,start)
-% [time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=readweek(year,number)
+% [time,Dm,Sm,Ta,Ua,Pa,Rc,Hc]=readweek(year,start)
 % 
 % This function parses weather data from a week of .asc files
 %
