@@ -15,12 +15,12 @@ colormap parula
 caxis([0 60])
 ylim([0.1 0.4])
 f.Children(1).Axes.XLim=[0 nodays];
-xlabel(strcat('Days After',{' '},datestr(startdate)));
+xlabel('Date');
 var=0:2:nodays;
 xdates=startdate+var;
-xticklabels(cellstr(datestr(xdates,'mm/dd')));
-xtickangle(90);
-title({['Spectrogram of Guyot Seismographs Plotted']; ['with ibtracs Wind Data During ',datestr(startdate)]});
+xticklabels(cellstr(datestr(xdates,'mm/dd/yyyy')));
+xtickangle(45);
+title({['Spectrogram of Guyot Seismographs Plotted']; ['with ibtracs Wind Data Beginning on ',datestr(startdate)]});
 
 yyaxis right
 ylabel('Wind Speed (km/h)')
