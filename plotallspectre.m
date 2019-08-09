@@ -24,7 +24,7 @@ xtickangle(45);
 title({['Spectrogram of Guyot Seismographs Plotted']; ['with ibtracs Wind Data Beginning on ',datestr(startdate)]});
 
 yyaxis right
-ylabel('Wind Speed (km/h)')
+ylabel('Wind Speed (knots)')
 hold on
 set(gca,'ycolor','k') 
 [name,~,isotime,~,~,wind]=readibtracs('myibtracs.mat');
@@ -32,9 +32,7 @@ i=find(name==hurricanename);
 h=isotime(i)-startdate;
 d=days(h);
 p=plot(d,fillmissing(wind(i),'previous'),'r','LineWidth',2);
-legend(p,'Wind Speed');
-
-
+legend(p,strcat('Windspeed of',{' '},hurricanename));
 
 % Optional output
 varns={f,ps};

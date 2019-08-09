@@ -49,7 +49,7 @@ for n=1:k
     c=colorbar();
     caxis([min(wind) max(wind)]);
     c.Position=[c.Position(1)+0.1 c.Position(2) c.Position(3)/3 c.Position(4)/1.1];
-    set(get(c,'Title'),'String','Windspeed (km/h)');
+    set(get(c,'Title'),'String','Windspeed (knots)');
     
     w=wind(index(i(n)):index(i(n)+1)-1);
     nans=find(isnan(w));
