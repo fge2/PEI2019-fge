@@ -43,9 +43,9 @@ slat = [-17.3, -12.0, -10.0, -8.0, -6.0, -5.0, -6.0, -8.0, -13.0, -17.0, -22.0,.
     -25.63, -25.0, -24.0, -22.2, -22.2];
 
 seconds=3600*24;
-launch=date_time{1};
+%launch=date_time{1};
 %run code from current day
-%launch=datetime('today');
+launch=datetime('today');
 
 % surface coords
 coords=zeros(25,2);
