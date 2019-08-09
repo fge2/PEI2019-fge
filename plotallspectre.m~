@@ -11,7 +11,7 @@ m1(m1==0)=NaN;
 f=figure;
 Fs=4;
 spectrogram(fillmissing(m1,'pchip'),1024,[],[],Fs,'yaxis');
-[~,~,~,ps]=spectrogram(fillmissing(m1,'pchip'),1024,[],[],Fs);
+[_,ps]=spectrogram(fillmissing(m1,'pchip'),1024,[],[],Fs);
 colormap parula
 caxis([0 60])
 ylim([0.1 0.4])
@@ -37,5 +37,5 @@ legend(p,'Wind Speed');
 
 
 % Optional output
-varns={f,ps};
+varns={f};
 varargout=varns(1:nargout);
